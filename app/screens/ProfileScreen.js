@@ -41,5 +41,12 @@ const styles = StyleSheet.create({
     width: 400,
     height: 190,
   },
+  bgimg2:{
+    width:100,
+    height:100,
+    borderRadius:90,
+    left:140,
+    bottom:60,
+  }
 })
 export default ProfileScreen
