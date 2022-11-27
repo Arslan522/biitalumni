@@ -1,80 +1,47 @@
-
 import React, { useState } from "react";
 import { Image, ImageBackground, View } from "react-native";
 import { FlatList, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity } from "react-native";
 import SearchStudent from "./SearchStudent";
 import bgImage from '../assets/logoo.png';
 
-
 const DATA = [
   {
-    id: "s3",
-    title: "React Native Developer",
-    detail: "BSCS",
-    job: "working as Software Developer",
-    company: "Global",
+    id: "s1",
+    title: "ReactNative",
+    detail: "Is React Native worth it in 2022",
   },
   {
     id: "s2",
-    title: "Flutter Developer needed",
+    title:"Flutter",
+    detail: "Does Flutter have a future?",
   },
   {
-    id: "s1",
-    title: "IOS/Swift",
+    id: "s3",
+    title: "IOS",
+    detail:"is ios developer a good career"
   },
   {
     id: "s4",
-    title: " Sql DataBase Creater",
-  },
-  {
-    id: "s5",
-    title: "Android Developer Needed",
-  },
-  {
-    id: "s6",
-    title: "Swift Developer Needed Experience 2 year",
-  },
-  {
-    id: "s8",
-    title: "",
-  },
-  {
-    id: "s9",
-    title: "Student 8",
-  },
-  {
-    id: "s10",
-    title: "Student 9",
-  },
-  {
-    id: "s11",
-    title: "Student 10",
-  },
-  {
-    id: "s12",
-    title: "Student 11",
-  },
-  {
-    id: "s31",
-    title: "Student 12",
-    detail: "BCS",
-    job: ""
-
-  },
+    title: "SQL Database ",
+    detial:"Is SQL database a good career?"
+  }, 
 ];
 
 const Item = ({ item, onPress, backgroundColor, textColor }) => (
   <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
     <View style={{ flexDirection: 'row' }}>
       <Image source={bgImage} />
-      <Text style={[styles.title, textColor]}>{item.title}
-
+      <View style={{ flexDirection:"column" }}>
+      <Text style={[styles.title, textColor]}>Title: {item.title}
       </Text>
+      <Text style={[styles.detail, textColor]}> Detail: {item.detail}
+      </Text>
+      </View>
     </View>
   </TouchableOpacity>
 );
 
-const Survey = () => {
+const ConductedSurveys = () => {
   const [selectedId, setSelectedId] = useState(null);
 
   const renderItem = ({ item }) => {
@@ -114,12 +81,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
   },
   title: {
-    fontSize: 24,
+    fontSize: 20,
     flexDirection: "column"
   },
+  detail:{
+    fontSize:15,
+  }
 });
 
 
-  
-
-export default Survey
+export default ConductedSurveys

@@ -8,10 +8,11 @@ import Drawer from './Drawers';
 import { Picker } from '@react-native-picker/picker';
 import { Item } from 'react-native-paper/lib/typescript/components/List/List';
 export default function Login({navigation,props}) {
-    const [type,setType]=useState('Shopkeeper');
+
+    const[type,setType]=useState();
     const[pnum,setPnum]=useState();
     const[pass,setPass]=useState();
-    const[users,setUsers]=useState([]);
+    const[users,setUsers]=useState();
 
   return (
     <ScrollView>
@@ -20,52 +21,80 @@ export default function Login({navigation,props}) {
         <Text style={styles.login}>BIIT Alumni</Text>
         <View style={styles.PickerView}>
           <Picker
-          
           selectedValue={type}
           onValueChange={(Itemvalue)=>{setType(Itemvalue)}}>
             <Picker.Item label='Admin' value='Shopkeeper'/>
             <Picker.Item label='Alumni' value='Customer'/>
-          
           </Picker>
-              
-          </View>
-        <Text style={styles.signintxt}>Sign In</Text>
-        <Text style={{marginRight:95}}>Hi there! Nice to see you again</Text>
-        <Text style={styles.regtxt}>Reg-No</Text>
+        </View>
+        <Text style={styles.signintxt}>
+          Sign In
+        </Text>
+        <Text style={{marginRight:95}}>
+          Hi there! Nice to see you again
+        </Text>
+        <Text style={styles.regtxt}>
+          Reg-No
+        </Text>
         <TextInput  
-                  autoCorrect={false}      
-                  require={true}
-                  placeholderTextColor={'grey'}
-                  placeholder='Reg-No'
-                  style={styles.input} 
-                  onChangeText={setPnum}
-              />
-        <View style={{ flexDirection: 'row', alignItems: 'center', width: '70%', marginTop: -10, marginBottom: 5 }}>
-          <View style={{ flex: 1, height: 1.5, backgroundColor: 'darkgrey' }} />
+          autoCorrect={false}      
+          require={true}
+          placeholderTextColor={'grey'}
+          placeholder='Reg-No'
+          style={styles.input} 
+          onChangeText={setPnum}
+        />
+        <View style={{ 
+         flexDirection: 'row', 
+         alignItems: 'center', 
+        width: '70%', 
+        marginTop: -10, 
+        marginBottom: 5 
+                    }}
+        >
+        <View style={{ 
+          flex: 1, 
+          height: 1.5,}} 
+        />
         </View>
-        <Text style={styles.passtxt}>Password</Text>
+        <Text style={styles.passtxt}>
+          Password
+        </Text>
         <TextInput
-                  require={true}
-                  placeholderTextColor={'grey'}
-                  placeholder='Enter Your Password..'
-                  secureTextEntry
-                  style={styles.input2} 
-                  onChangeText={setPass}/>
-        <View style={{ flexDirection: 'row', alignItems: 'center', width: '70%', marginTop: -10, marginBottom: 5 }}>
-          <View style={{ flex: 1, height: 1.5, backgroundColor: 'darkgrey' }} />
+          require={true}
+          placeholderTextColor={'grey'}
+          placeholder='Enter Your Password..'
+          secureTextEntry
+          style={styles.input2} 
+          onChangeText={setPass}/>
+        <View style={{ flexDirection:'row', 
+        alignItems: 'center', 
+        width: '70%', 
+        marginTop:-10, 
+        marginBottom: 5 
+                    }}
+        >
+        <View style={{ 
+          flex: 1, 
+          height: 1.5, 
+          backgroundColor:'darkgrey' 
+                    }} 
+        />
         </View>
-        <Button mode="contained"
+        <Button 
+          mode="contained"
           style={styles.btn}
           onPress={() =>
-            navigation.replace('Drawer')}>
+          navigation.replace('Drawer')}>
           Login
         </Button>
-        <Text style={styles.ftr}>Don't have an account?
+        <Text style={styles.ftr}>
+          Don't have an account?
         </Text>
         <Button
           style={styles.sginupbtn}
           onPress={() =>
-            navigation.navigate('Signup')}> Signup </Button>
+          navigation.navigate('Signup')}> Signup </Button>
       </View>
     </ScrollView>
   )
@@ -85,7 +114,6 @@ const styles = StyleSheet.create({
     right: 106,
     fontSize: 25,
     paddingBottom: 5,
-    // paddingTop: 10,
   },
    PickerView:{
         backgroundColor:'lightgrey',
@@ -120,7 +148,6 @@ const styles = StyleSheet.create({
     marginLeft: 24,
     color: 'black',
     left: -7.5,
-
   },
   bg: {
 

@@ -6,7 +6,8 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import MainScreen from './MainScreen';
 import MyComponent from './Appbar';
 import Imageppicker from './Imageppicker';
-import Survey from './Survey';
+import CreateJob from './CreateJob';
+import CreateSurvey from './CreateSurvey';
 
 const Drawer = createDrawerNavigator();
 const Drawers = () => {
@@ -35,9 +36,14 @@ const Drawers = () => {
         options={{ drawerLabel: 'ProfileScreen' }}
       />
       <Drawer.Screen
-        name="Survey"
-        component={Survey}
-        options={{ drawerLabel: 'Survey' }}
+        name="Create Job"
+        component={CreateJob}
+        options={{ drawerLabel: 'Create Jobs' }}
+      />
+      <Drawer.Screen
+        name="Create Survey"
+        component={CreateSurvey}
+        options={{ drawerLabel: 'Create Survey' }}
       />
     </Drawer.Navigator>
   );

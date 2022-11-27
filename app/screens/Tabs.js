@@ -7,8 +7,9 @@ import EditProfile from './EditProfile';
 import MainScreen from './MainScreen';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import Survey from './Survey';
+import Jobs from './Jobs';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import job from './Jobs';
 
 const Tab = createMaterialBottomTabNavigator();
 function Tabs() {
@@ -44,7 +45,7 @@ function Tabs() {
           />
         ),
       }} />
-      <Tab.Screen name="Survey" component={Survey} options={{
+      <Tab.Screen name="job" component={job} options={{
         headerShown: false,
         tabBarIcon: ({ focused, size }) => (
           <Icon

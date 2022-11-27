@@ -11,8 +11,9 @@ import EditProfile from './app/screens/EditProfile';
 import SearchedStudentProfile from './app/screens/SearchedStudentProfile';
 import SearchedStudent from './app/screens/SearchedStudent';
 import { NavigationContainer } from '@react-navigation/native';
-import Survey from './app/screens/Survey';
+import job from './app/screens/Jobs';
 import Drawer from './app/screens/Drawers';
+import ConductedSurveys from './app/screens/ConductedSurveys';
 const Stack = createStackNavigator();
 
 const App = () => {
@@ -26,8 +27,9 @@ const App = () => {
         <Stack.Screen name="EditProfile" component={EditProfile} />
         <Stack.Screen name="SearchedStudent" component={SearchedStudent} />
         <Stack.Screen name="SearchedStudentProfile" component={SearchedStudentProfile} />
-        <Stack.Screen name="Survey" component={Survey} />
+        <Stack.Screen name="Jobs" component={job} />
         <Stack.Screen name="Signup" component={Signup} />
+        <Stack.Screen name="ConductedSurveys" component={ConductedSurveys} />
       </Stack.Navigator>
     </NavigationContainer>
   )
@@ -35,37 +37,3 @@ const App = () => {
 
 export default App
 
-// import { View, Text } from 'react-native';
-// import React from 'react';
-// import ProfileScreen from './app/screens/ProfileScreen';
-// import SearchStudent from './app/screens/SearchStudent';
-// import MainScreen from'./app/screens/MainScreen';
-// import { createDrawerNavigator } from '@react-navigation/drawer';
-// import { NavigationContainer } from '@react-navigation/native';
-
-// const Drawers = createDrawerNavigator();
-
-// const App = () => {
-//     return(
-//         <NavigationContainer>
-//     <Drawer.Navigator >
-//       <Drawer.Screen
-//         name="home"
-//         component={ProfileScreen}
-//         options={{ drawerLabel: 'Home' }}
-//       />
-//       <Drawer.Screen
-//         name="Notifications"
-//         component={SearchStudent}
-//         options={{ drawerLabel: 'Updates' }}
-//       />
-//       <Drawer.Screen
-//         name="Profile"
-//         component={MainScreen}
-//         options={{ drawerLabel: 'Profile' }}
-//       />
-//     </Drawer.Navigator>
-//     </NavigationContainer>
-//   );
-// }
-// export default Drawer
