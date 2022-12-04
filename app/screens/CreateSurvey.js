@@ -7,34 +7,34 @@ import { useState } from 'react';
 import { black } from 'react-native-paper/lib/typescript/styles/colors';
 import job from './Jobs';
 import ConductedSurveys from './ConductedSurveys';
-const CreateSurvey = ({navigation}) => {
+const CreateSurvey = ({ navigation }) => {
 
     const [Degree, setDegree] = useState();
     const [City, setCity] = useState();
 
     return (
-        
+
         <View style={{ height: '100%' }}>
             <Image source={bgImage} style={styles.bg} />
             <Text style={{ color: "black", fontSize: 18, left: 15 }}>
-             Title for the survey
+                Title for the survey
             </Text>
-            <TextInput style={{ height: 40,width:350,left:20,paddingLeft:10,backgroundColor: 'lightgrey'}}
+            <TextInput style={{ height: 40, width: 350, left: 20, paddingLeft: 10, backgroundColor: 'lightgrey' }}
                 placeholderTextColor={'grey'}
                 placeholder='Title..'>
             </TextInput>
             <Text style={{ color: "black", fontSize: 18, left: 15 }}>
-             Start Date
+                Start Date
             </Text>
-            <TextInput style={{ height: 40,width:350,left:20,paddingLeft:10,backgroundColor: 'lightgrey'}}
+            <TextInput style={{ height: 40, width: 350, left: 20, paddingLeft: 10, backgroundColor: 'lightgrey' }}
                 placeholderTextColor={'grey'}
                 placeholder='Enter Start Date'>
 
             </TextInput>
             <Text style={{ color: "black", fontSize: 18, left: 15 }}>
-             End Date
+                End Date
             </Text>
-            <TextInput style={{ height: 40,width:350,left:20,paddingLeft:10,backgroundColor: 'lightgrey'}}
+            <TextInput style={{ height: 40, width: 350, left: 20, paddingLeft: 10, backgroundColor: 'lightgrey' }}
                 placeholderTextColor={'grey'}
                 placeholder='Enter End Date'
                 keyboardType='numeric'>
@@ -57,7 +57,7 @@ const CreateSurvey = ({navigation}) => {
             <Picker style={{
                 backgroundColor: 'lightgrey',
                 // top: 10,
-                height: 40,width:350,left:20,paddingLeft:10,
+                height: 40, width: 350, left: 20, paddingLeft: 10,
             }}
                 selectedValue={City}
                 onValueChange={(Itemvalue) => { setCity(Itemvalue) }}>
@@ -67,8 +67,8 @@ const CreateSurvey = ({navigation}) => {
                 <Picker.Item label='Islamabad' value='Islamabad' />
             </Picker>
             <Button
-                style={{ top: 10,height: 40,width:350,left:20,paddingLeft:10, }}
-                mode="contained" 
+                style={{ top: 10, height: 40, width: 350, left: 20, paddingLeft: 10, }}
+                mode="contained"
                 onPress={() =>
                     navigation.navigate('ConductedSurveys')}>
                 Create Survey
@@ -83,13 +83,13 @@ const styles = StyleSheet.create
                 backgroundColor: 'lightgrey',
                 margintop: 10,
                 // marginStart:40,
-                height: 40,width:350,left:20,paddingLeft:10
+                height: 40, width: 350, left: 20, paddingLeft: 10
             },
             bg: {
                 justifyContent: 'center',
-                marginTop:30,
-                left:80,
-              },
+                marginTop: 30,
+                left: 80,
+            },
 
 
 

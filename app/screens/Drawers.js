@@ -1,13 +1,14 @@
 import { View, Text } from 'react-native';
 import React from 'react';
-import ProfileScreen from './ProfileScreen';
-import SearchStudent from './SearchStudent';
+import ProfileScreen from '../screens/ProfileScreen';
+import SearchStudent from '../screens/SearchStudent';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import MainScreen from './MainScreen';
+import MainScreen from '../screens/MainScreen';
 import MyComponent from './Appbar';
-import Imageppicker from './Imageppicker';
-import CreateJob from './CreateJob';
-import CreateSurvey from './CreateSurvey';
+import Imageppicker from '../screens/Imageppicker';
+import CreateJob from '../screens/CreateJob';
+import CreateSurvey from '../screens/Survey';
+import Survey from '../screens/Survey';
 
 const Drawer = createDrawerNavigator();
 const Drawers = () => {
@@ -28,22 +29,22 @@ const Drawers = () => {
       <Drawer.Screen
         name="Notifications"
         component={SearchStudent}
-        options={{ drawerLabel: 'SerachStudent' }}
+        options={{ drawerLabel: 'Serach Alumni' }}
       />
       <Drawer.Screen
         name="Profile"
         component={ProfileScreen}
-        options={{ drawerLabel: 'ProfileScreen' }}
+        options={{ drawerLabel: 'Profile' }}
       />
       <Drawer.Screen
-        name="Create Job"
+        name="Job"
         component={CreateJob}
-        options={{ drawerLabel: 'Create Jobs' }}
+        options={{ drawerLabel: 'Jobs' }}
       />
       <Drawer.Screen
-        name="Create Survey"
-        component={CreateSurvey}
-        options={{ drawerLabel: 'Create Survey' }}
+        name="Survey"
+        component={Survey}
+        options={{ drawerLabel: 'Surveys' }}
       />
     </Drawer.Navigator>
   );

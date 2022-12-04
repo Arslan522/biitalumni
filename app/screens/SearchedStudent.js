@@ -14,23 +14,23 @@ const DATA = [
   },
   {
     id: "s2",
-    title: "Nabeel Jamal",
+    title: "Nabeel Gujjar",
   },
   {
     id: "s1",
-    title: "Kamran Jamal",
+    title: "Kamran Mayo",
   },
   {
     id: "s4",
-    title: "Kashif Jamal",
+    title: "Kashif Mughal",
   },
   {
     id: "s5",
-    title: "Ahsan jamal",
+    title: "Ahsan Ali",
   },
   {
     id: "s6",
-    title: "Nouman Jamal",
+    title: "Nouman Mehmood",
   },
   {
     id: "s8",

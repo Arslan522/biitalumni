@@ -79,7 +79,7 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
   </TouchableOpacity>
 );
 
-const job = () => {
+const Job = () => {
   const [selectedId, setSelectedId] = useState(null);
 
   const renderItem = ({ item }) => {
@@ -136,4 +136,4 @@ const styles = StyleSheet.create({
 
   
 
-export default job
+export default Job

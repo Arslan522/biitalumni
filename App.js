@@ -14,6 +14,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import job from './app/screens/Jobs';
 import Drawer from './app/screens/Drawers';
 import ConductedSurveys from './app/screens/ConductedSurveys';
+import Job from './app/screens/Jobs';
+import Survey from './app/screens/Survey';
+import CreateSurvey from './app/screens/CreateSurvey';
+import RadioButtonss from './app/screens/RadioButtons';
+
+global.apiUrl = 'http://192.168.211.97/FypAlumni/api/student/'
 const Stack = createStackNavigator();
 
 const App = () => {
@@ -27,13 +33,15 @@ const App = () => {
         <Stack.Screen name="EditProfile" component={EditProfile} />
         <Stack.Screen name="SearchedStudent" component={SearchedStudent} />
         <Stack.Screen name="SearchedStudentProfile" component={SearchedStudentProfile} />
-        <Stack.Screen name="Jobs" component={job} />
+        <Stack.Screen name="Jobs" component={Job} />
+        <Stack.Screen name="Main Page" component={MainScreen} />
         <Stack.Screen name="Signup" component={Signup} />
+        <Stack.Screen name="radio" component={RadioButtonss} />
+        <Stack.Screen name="CreateSurvey" component={CreateSurvey} />
         <Stack.Screen name="ConductedSurveys" component={ConductedSurveys} />
       </Stack.Navigator>
     </NavigationContainer>
   )
 }
-
 export default App
 
