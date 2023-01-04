@@ -18,17 +18,28 @@ import Job from './app/screens/Jobs';
 import Survey from './app/screens/Survey';
 import CreateSurvey from './app/screens/CreateSurvey';
 import RadioButtonss from './app/screens/RadioButtons';
+import Result from './app/screens/Result';
+import AddQuestion from './app/screens/AddQuestion';
+import Splash from './app/screens/Splash';
+import ScreenOfSurveys from './app/screens/ScreenOfSurvey';
+import Endorcement from './app/screens/Endorcement';
+import Endorcements from './app/screens/Endorcement';
+import CreateJob from './app/screens/CreateJob';
+import Modals from './app/screens/Modal';
 
-global.apiUrl = 'http://192.168.211.97/FypAlumni/api/student/'
+//192.168.100.42 wifi
+//192.168.232.97 mobile
+global.apiurl = 'http://192.168.100.42/FypAlumni/api/';
+global.imageUrl = 'http://192.168.100.42/FypAlumni/Content/Image/';
 const Stack = createStackNavigator();
 
 const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Login" ScreenOptions={{ headerShown: false }} >
+        initialRouteName="Splash" component={Splash} ScreenOptions={{ headerShown: false }} >
         <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name='Drawer' component={Drawer} />
+        <Stack.Screen name='Drawer' component={Drawer} options={{ headerShown: false }} />
         <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
         <Stack.Screen name="EditProfile" component={EditProfile} />
         <Stack.Screen name="SearchedStudent" component={SearchedStudent} />
@@ -39,9 +50,20 @@ const App = () => {
         <Stack.Screen name="radio" component={RadioButtonss} />
         <Stack.Screen name="CreateSurvey" component={CreateSurvey} />
         <Stack.Screen name="ConductedSurveys" component={ConductedSurveys} />
+        <Stack.Screen name="Result" component={Result} />
+        <Stack.Screen name="Add Questions" component={AddQuestion} />
+        <Stack.Screen name="ScreenOfSurveys" component={ScreenOfSurveys} />
+        <Stack.Screen name="Endorcement" component={Endorcement} />
+        <Stack.Screen name="CreateJob" component={CreateJob} />
+        <Stack.Screen name="Modal" component={Modals} />
+
+
+
       </Stack.Navigator>
     </NavigationContainer>
   )
 }
 export default App
+
+
 

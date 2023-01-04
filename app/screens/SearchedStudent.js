@@ -3,6 +3,7 @@ import { Image, ImageBackground, View } from "react-native";
 import { FlatList, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity } from "react-native";
 import SearchStudent from "./SearchStudent";
 import bgImage from '../assets/logoo.png';
+import ProfileScreen from "./ProfileScreen";
 
 const DATA = [
   {
@@ -16,49 +17,7 @@ const DATA = [
     id: "s2",
     title: "Nabeel Gujjar",
   },
-  {
-    id: "s1",
-    title: "Kamran Mayo",
-  },
-  {
-    id: "s4",
-    title: "Kashif Mughal",
-  },
-  {
-    id: "s5",
-    title: "Ahsan Ali",
-  },
-  {
-    id: "s6",
-    title: "Nouman Mehmood",
-  },
-  {
-    id: "s8",
-    title: "Student 7",
-  },
-  {
-    id: "s9",
-    title: "Student 8",
-  },
-  {
-    id: "s10",
-    title: "Student 9",
-  },
-  {
-    id: "s11",
-    title: "Student 10",
-  },
-  {
-    id: "s12",
-    title: "Student 11",
-  },
-  {
-    id: "s31",
-    title: "Student 12",
-    detail: "BCS",
-    job: ""
-
-  },
+ 
 ];
 
 const Item = ({ item, onPress, backgroundColor, textColor }) => (
@@ -72,7 +31,7 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
   </TouchableOpacity>
 );
 
-const SearchedStudent = () => {
+const SearchedStudent = ({navigation}) => {
   const [selectedId, setSelectedId] = useState(null);
 
   const renderItem = ({ item }) => {
@@ -82,7 +41,8 @@ const SearchedStudent = () => {
     return (
       <Item
         item={item}
-        onPress={(navigation) => navigation.navigate('SearchStudentProfile')}
+        onPress={() =>
+          navigation.navigate('ProfileScreen')}
         backgroundColor={{ backgroundColor }}
         textColor={{ color }}
       />

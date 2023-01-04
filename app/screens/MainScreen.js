@@ -1,187 +1,224 @@
-import { View, Text } from 'react-native'
-import * as React from 'react';
-import { Image } from 'react-native';
-import { StyleSheet } from 'react-native';
-import { Button, IconButton, Searchbar, TextInput } from 'react-native-paper';
-import bgImage from '../assets/profile.png';
-import bgImage2 from '../assets/post.jpg';
-import bgImage3 from '../assets/profilepic.png'
-import { ScrollView } from 'react-native';
-import Tabs from './Tabs';
-import { blue100 } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import MyComponent from '../screens/Appbar';
-import RadioButton from '../screens/RadioButtons';
-import Pie from 'react-native-pie';
-import { Font } from 'react-native-paper/lib/typescript/types';
+import { StyleSheet, Text, View, FlatList, Image, ScrollView } from 'react-native'
+import React from 'react'
+import { useState, useEffect } from 'react'
+import { parse } from '@babel/core'
+import { TextInput } from 'react-native-gesture-handler'
+import { Button } from 'react-native-paper'
+import avatarImage from '../assets/logo.png';
+import { launchImageLibrary } from 'react-native-image-picker';
+import Toast from 'react-native-simple-toast'
+import { Alert } from 'react-native'
+//import QRCode from 'react-native-qrcode-generator'
+
+export default function MainScreen() {
+    const [postdescription, setPostDescription] = useState();
+    const [getProduct, setProduct] = useState()
+    const [Postdata, setPostdata] = useState()
+    const [imgsrc, setImagesrc] = useState(Image.resolveAssetSource(avatarImage).uri)
+    const [image, setImage] = useState({})
+    //console.log("get ..............", global.aridno);
 
 
-const MainScreen = ({ navigation }) => {
-  const [searchQuery, setSearchQuery] = React.useState('');
-  const onChangeSearch = query => setSearchQuery(query);
-  return (
-    <ScrollView style={{ marginRight: "1.3%", marginLeft: "1.3%" }}>
-      <View style={{ flexDirection: "row" }}>
-        <View style={{
-          height: 20,
-          width: 100,
-          backgroundColor: '#44Cb00',
-          position: 'absolute',
-          top: 24,
-          left: 147,
-        }}>
-          <Text style={{ left: 10, fontWeight: "bold" }}>
-            Easy
-          </Text>
-        </View>
-        <View style={{
-          height: 20,
-          width: 100,
-          backgroundColor: '#404eab',
-          position: 'absolute',
-          top: 45,
-          left: 147,
-        }}>
-          <Text style={{ left: 10, fontWeight: "bold" }}>
-            Neutral
-          </Text>
-        </View>
-        <View style={{
-          height: 20,
-          width: 100,
-          backgroundColor: '#C70000',
-          position: 'absolute',
-          top: 66,
-          left: 147,
-        }}>
-          <Text style={{ left: 10, fontWeight: "bold" }}>
-            Hard
-          </Text>
-        </View>
-        <View style={{
-          height: 20,
-          width: 100,
-          backgroundColor: '#EBDa09',
-          position: 'absolute',
-          top: 87,
-          left: 147,
-        }}>
-          <Text style={{ left: 10, fontWeight: "bold" }}>
-            Not Sure
-          </Text>
-        </View>
-        <Pie
-          radius={70}
-          innerRadius={0}
+    useEffect(() => {
+        timelineView()
+    }, [])
+    //console.log("Products shown here",getProduct)
+    //console.log(global.aid);
 
-          sections={[
-            {
-              id: 1,
-              percentage: 10,
-              color: '#C70000',
-            },
-            {
-              id: 2,
-              percentage: 20,
-              color: '#44Cb00',
-            },
-            {
-              id: 3,
-              percentage: 30,
-              color: '#404eab',
-            },
-            {
-              id: 4,
-              percentage: 40,
-              color: '#EBD00c',
-            },
-          ]}
-          dividerSize={0}
-          strokeCap={'butt'}
-        />
-        <Text style={{ color: "black" }}>
-          Result
-        </Text>
-      </View>
-      <TextInput placeholder="Write post" style={{ paddingBottom: 40 }} >
-      </TextInput >
-      <Button mode="elevated" contentStyle=""> Post</Button>
-      <View style={{ marginTop: 10, marginBottom: 10 }}>
-        <View style={{ flexDirection: 'row', paddingTop: 30, maxWidth: "80%" }} >
-          <Image source={bgImage3} style={styles.bgimg2} />
-          <Text>
-            Arslan Jamal
-          </Text>
-          <Text style={{ top: 13, right: 80 }}>
-            12:23
-          </Text>
-        </View>
-        <View>
-          <Image source={bgImage2} style={{ width: "100%", height: 250 }} resizeMode="stretch" />
-        </View>
-        <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%' }}>
-          <View style={{ flex: 1, height: 1.5, backgroundColor: 'darkgrey' }} />
-        </View>
-      </View>
+    const options = {
+        title: 'Select Image',
+        type: 'library',
+        options: {
+            maxHeight: 200,
+            maxWidth: 200,
+            selectionLimit: 1,
+            mediaType: 'photo',
+            includeBase64: false
+        }
+    }
 
-      <View style={{ marginTop: 10, marginBottom: 10 }}>
-        <View style={{ flexDirection: 'row', paddingTop: 30, maxWidth: "80%" }} >
-          <Image source={bgImage} style={styles.bgimg2} />
-          <Text>
-            Arslan Jamal
-          </Text>
-          <Text style={{ top: 13, right: 80 }}>
-            12:23
-          </Text>
-        </View>
-        <View >
-          <Image source={bgImage2} style={{ width: "100%", height: 250 }} resizeMode="stretch" />
-        </View>
-        <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%' }}>
-          <View style={{ flex: 1, height: 1.5, backgroundColor: 'darkgrey' }} />
-        </View>
-      </View>
+    const openGallery = async () => {
+        const result = await launchImageLibrary(options)
+        setImagesrc(result.assets[0].uri)
+        setImage(
+            result.assets[0]
+        )
+        console.log(result)
+    }
+
+    //var aid = global.aid;
+
+    async function addpost() {
+        // user = {
+        //     aid: global.aid,
+        //     postdescription: postdescription,
+        // }
+        //console.log(user);
+        const data = new FormData()
+        // data.append('name', 'hello')
+        data.append('PostPhoto', { uri: image.uri, type: image.type, name: image.fileName })
+        //console.log('calling addpost...........', global.apiurl, data)
+        //console.log(data);
+        let response = await fetch
+            (global.apiurl + `student/addPost?aid=${global.aid}&postdiscription=${postdescription}`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-type': 'multipart/form-data'
+                    },
+                    body: data
+                })
+        let json = await response.json()
+        console.log(JSON.stringify(json))
+        setPostdata(json)
+        console.log("Add Post pressed", json);
 
 
-      <View style={{ marginTop: 10, marginBottom: 10 }}>
-        <View style={{ flexDirection: 'row', paddingTop: 30, maxWidth: "80%" }} >
-          <Image source={bgImage3} style={styles.bgimg2} />
-          <Text>
-            Arslan Jamal
-          </Text>
-          <Text style={{ top: 13, right: 80 }}>
-            12:23
-          </Text>
+        if (json == "Post Added") {
+            Alert.alert("Post","Added Successfully...")
+        }
+        else {
+            alert('Unsuccessfull')
+        }
+    }
+
+
+    async function timelineView() {
+        //  let id = await AsyncStorage.getItem("userId")
+        let response = await fetch
+            (global.apiurl + 'student/TimeLine')
+        let json = await response.json();
+        console.log(JSON.stringify(json));
+        setProduct(json);
+        console.log("this...............", json)
+    }
+    console.log(global.aridno)
+    ///global.shopPhone
+    return (
+        <View style={{ flex: 1 }}>
+            <TextInput
+                style={{ borderRadius: 100, paddingLeft: 20, width: "95%", marginLeft: 10 }}
+                backgroundColor="lightgrey"
+                onChangeText={setPostDescription}
+                value={postdescription}
+                placeholder="What's on your mind">
+
+            </TextInput>
+            <View style={{ flexDirection: "row", height: 100, borderRadius: 30 }}>
+
+                <Image source={{ uri: imgsrc }} style={{
+                    width: 75, height: 75,
+                    borderRadius: 20, borderColor: "black", left: 20, top: 10, borderColor: "black", borderWidth: 1
+                }} /><Button
+                    style={{ height: 37.3, left: 155, top: 5 }}
+                    mode="contained"
+                    color='red'
+                    onPress={() => { openGallery() }}>
+                    select image
+                </Button>
+                <Button
+                    style={{ height: 37.3, left: 50, top: 45 }}
+                    mode="contained"
+                    color='red'
+                    onPress={() => { addpost() }}>
+                    post
+                </Button>
+
+
+            </View>
+
+            <View >
+
+                <FlatList
+                    //style={{ flex: 1 }}
+                    style={{ backgroundColor: "darkgray" }}
+                    data={getProduct}
+                    scrollEnabled
+                    renderItem={({ item }) => {
+                        console.log("Flatlist items.......", item);
+                        return (
+                            <View style={styles.FlatlistContainer} key={item.key}>
+                                <View style={{ flexDirection: "row", left: 5, top: 4 }}>
+                                    <Image style={{ backgroundColor: "black", height: 50, width: 50, borderRadius: 50 }} source={{ uri: global.imageUrl + `${item.ProfileImg}` }} />
+                                    <Text style={{ color: 'black', fontSize: 18, top: 7, left: 7, fontWeight: "bold" }} >{item.FirstName} {item.LastName}</Text>
+                                </View>
+
+                                <View style={styles.infoContainer}>
+                                    <Text style={{ color: 'black', fontSize: 17, fontFamily: "bold", left: 9, top: 7.5 }} >{item.PostDis}</Text>
+                                </View>
+                                <View style={{
+                                    borderColor: "black",
+                                    borderTopWidth: 0.5,
+                                    top: 7,
+                                    paddingTop: 10,
+
+                                }}>
+                                    <Image style={{
+                                        backgroundColor: "black", height: 386,
+                                        width: 388, borderRadius: 10,
+                                        marginBottom: 15,
+                                        right: 3,
+                                        justifyContent: "center",
+                                        alignContent: "center",
+
+                                    }} source={{ uri: global.imageUrl + `${item.PostImg}` }} />
+                                </View>
+
+                            </View>)
+                    }
+                    } />
+            </View>
         </View>
-        <View >
-          <Image source={bgImage2} style={{ width: "100%", height: 250 }} resizeMode="stretch" />
-        </View>
-        <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%' }}>
-          <View style={{ flex: 1, height: 1.5, backgroundColor: 'darkgrey' }} />
-        </View>
-      </View>
-    </ScrollView>
-  )
+    )
 }
 
 const styles = StyleSheet.create({
+    FlatlistContainer: {
+        backgroundColor: 'white',
+        //flexDirection: 'row',
+        margin: 5,
+        marginTop: 10,
+        // flex:1,
+        // borderRadius: 10,
+        // backgroundColor: 'grey',
+        // height:90,
+        position: 'relative',
+        //flexGrow:0
+    },
 
-  editprofilebtn: {
-    left: 120,
-    width: 160,
-    color: 'cyan'
-  },
-  post: {
-    borderWidth: 2,
-    borderColor: 'grey',
-  },
-  bgimg2: {
-    height: 70,
-    width: 70,
-    borderRadius: 70,
-    borderWidth: 1,
-    borderColor: 'grey',
-  },
+    Text: {
+        fontSize: 15,
+        color: 'grey',
+
+    },
+
+    QRCode: {
+        marginLeft: 20,
+    },
+
+    imageContainer: {
+        height: 70,
+        width: 77,
+        marginLeft: 10,
+        borderRadius: 10,
+        alignItems: "center",
+        justifyContent: "center",
+        //backgroundColor:'red',
+
+    },
+
+    // infoContainer: {
+    //     // marginLeft: 20,
+    //     // bottom:5,
+    //     fontFamily:"bold",
+    //     left:5,
+    //     // alignItems: 'flex-start',
+    //     // justifyContent: "space-evenly",
+    //     width: 180,
+    //     //backgroundColor:'#F0ECD5',
+
+    // },
 })
 
-export default MainScreen
+
+

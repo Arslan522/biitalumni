@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import React from 'react';
 import ProfileScreen from '../screens/ProfileScreen';
 import SearchStudent from '../screens/SearchStudent';
@@ -9,43 +9,115 @@ import Imageppicker from '../screens/Imageppicker';
 import CreateJob from '../screens/CreateJob';
 import CreateSurvey from '../screens/Survey';
 import Survey from '../screens/Survey';
+import ScreenOfSurvey from './ScreenOfSurvey';
+import  Icon  from 'react-native-vector-icons/MaterialIcons'; 
+import ConductedSurveys from './ConductedSurveys';
+import AddQuestion from './AddQuestion';
+import RadioButtonss from './RadioButtons';
+import bgImage from '../assets/logo.png';
+import Job from './Jobs';
+import Modals from './Modal';
+import { Touchable } from 'react-native';
+import Login from './Login';
+import ImagePicker from './Imageppicker';
+import ViewOrder from './ViewOrder';
+
 
 const Drawer = createDrawerNavigator();
 const Drawers = () => {
   return (
-    <Drawer.Navigator ScreenOptions={{ headerShown: false }}>
+    <Drawer.Navigator >
       <Drawer.Screen
-        name="home"
+        name="Main Page"
         component={MainScreen}
-        
-        ScreenOptions={{ headerShown: false }}
-      />
-      <Drawer.Screen
-        name="ImagePicker"
-        component={Imageppicker}
-        
-        ScreenOptions={{ headerShown: false }}
-      />
-      <Drawer.Screen
-        name="Notifications"
-        component={SearchStudent}
-        options={{ drawerLabel: 'Serach Alumni' }}
+        options={{ drawerLabel:'Timeline',
+        drawerIcon:({focused,size})=>(
+          <Icon 
+        name="contact-page"
+        size={25}
+        color={focused ? '#2196F3' : 'black'}/>
+        ),
+      }}
       />
       <Drawer.Screen
         name="Profile"
         component={ProfileScreen}
-        options={{ drawerLabel: 'Profile' }}
+        options={{ drawerLabel:'Profile',
+        drawerIcon:({focused,size})=>(
+          <Icon 
+        name="person"
+        size={25}
+        color={focused ? '#2196F3' : 'black'}/>
+        ),
+      }}
+      />
+      <Drawer.Screen
+        name="Search Alumni"
+        component={SearchStudent}
+        options={{ drawerLabel:'Search Alumni',
+        drawerIcon:({focused,size})=>(
+          <Icon 
+        name="search"
+        size={25}
+        color={focused ? '#2196F3' : 'black'}/>
+        ),
+      }}
       />
       <Drawer.Screen
         name="Job"
-        component={CreateJob}
-        options={{ drawerLabel: 'Jobs' }}
+        component={Job}
+        options={{ drawerLabel:'Job',
+        drawerIcon:({focused,size})=>(
+          <Icon 
+        name="add-task"
+        size={25}
+        color={focused ? '#2196F3' : 'black'}/>
+        ),
+      }}
       />
       <Drawer.Screen
-        name="Survey"
-        component={Survey}
-        options={{ drawerLabel: 'Surveys' }}
+        name="ConductedSurveys"
+        component={ConductedSurveys}
+        options={{ drawerLabel:'Surveys',
+        drawerIcon:({focused,size})=>(
+          <Icon 
+        name="post-add"
+        size={25}
+        color={focused ? '#2196F3' : 'black'}/>
+        ),
+      }}
+        />
+      <Drawer.Screen
+        name="Image"
+        component={Imageppicker}
+        options={{
+          drawerLabel: 'Surveys',
+          drawerIcon: ({ focused, size }) => (
+            <Icon
+              name="post-add"
+              size={25}
+              color={focused ? '#2196F3' : 'black'} />
+          ),
+        }}
       />
+
+        <Drawer.Screen
+        
+        name="vieworder"
+        component={ViewOrder}
+        
+        options={{ drawerLabel:'vieworder',
+        headerShown: false,
+        
+        drawerIcon:({focused,size})=>(
+          <Icon 
+        name="logout"
+        size={25}
+        color={focused ? '#2196F3' : 'black'}/>
+        ),
+      }}
+      />
+              
     </Drawer.Navigator>
   );
 }

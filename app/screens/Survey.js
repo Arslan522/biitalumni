@@ -5,6 +5,7 @@ import { Button } from 'react-native-paper'
 import bgImage from '../assets/logo.png';
 import { StyleSheet } from 'react-native';
 import CreateSurvey from './CreateSurvey';
+import ConductedSurveys from './ConductedSurveys';
 
 
 const Survey = ({navigation}) => {
@@ -20,17 +21,20 @@ const Survey = ({navigation}) => {
       <Button style={{top:14 , width: 250,left:80}} 
       mode="contained"
       onPress={() =>
-        navigation.navigate('ConductedSurveys')}>>
+        navigation.navigate('ConductedSurveys')}>
         Pending Surveys
       </Button>
       <Button style={{top:18, width: 250,left:80}} 
-      mode="contained">
+      mode="contained"
+      onPress={() =>
+        navigation.navigate('ConductedSurveys')}>
+  
         Approved Surveys
       </Button>
       <Button style={{top:22, width: 250,left:80}} 
       mode="contained"
       onPress={() =>
-        navigation.navigate('CreateSurvey')}>>
+        navigation.navigate('ConductedSurveys')}>
         Requested for approving
       </Button>
       

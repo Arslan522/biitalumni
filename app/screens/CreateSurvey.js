@@ -7,13 +7,48 @@ import { useState } from 'react';
 import { black } from 'react-native-paper/lib/typescript/styles/colors';
 import job from './Jobs';
 import ConductedSurveys from './ConductedSurveys';
+import AddQuestion from './AddQuestion';
+import { Alert } from 'react-native';
+
 const CreateSurvey = ({ navigation }) => {
 
-    const [Degree, setDegree] = useState();
-    const [City, setCity] = useState();
+    const [title, settitle] = useState();
+    const [startdate, setstartdate] = useState();
+    const [enddate, setenddate] = useState();
+
+
+
+
+    async function saveUser() {
+        console.log('calling Creating Survey...........',)
+        let response = await fetch
+            ('http://192.168.100.42/FypAlumni/api/student/CreateSurvey',
+                {
+                    method: 'POST',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        title: title,
+                        start_date: startdate,
+                        end_date: enddate,
+                    })
+                })
+        let json = await response.json()
+        console.log(JSON.stringify(json))
+        if (json == "Survey Added") {
+            Alert.alert('Survey', ' Posting Unsuccessfull')
+
+        }
+        else {
+            Alert.alert('Survey', 'Added to database')
+            navigation.navigate("AddQuestion")
+        }
+    }
+
 
     return (
-
         <View style={{ height: '100%' }}>
             <Image source={bgImage} style={styles.bg} />
             <Text style={{ color: "black", fontSize: 18, left: 15 }}>
@@ -21,14 +56,17 @@ const CreateSurvey = ({ navigation }) => {
             </Text>
             <TextInput style={{ height: 40, width: 350, left: 20, paddingLeft: 10, backgroundColor: 'lightgrey' }}
                 placeholderTextColor={'grey'}
-                placeholder='Title..'>
+                placeholder='Title..'
+                onChangeText={n => settitle(n)}>
+
             </TextInput>
             <Text style={{ color: "black", fontSize: 18, left: 15 }}>
                 Start Date
             </Text>
             <TextInput style={{ height: 40, width: 350, left: 20, paddingLeft: 10, backgroundColor: 'lightgrey' }}
                 placeholderTextColor={'grey'}
-                placeholder='Enter Start Date'>
+                placeholder='Enter Start Date'
+                onChangeText={n => setstartdate(n)}>
 
             </TextInput>
             <Text style={{ color: "black", fontSize: 18, left: 15 }}>
@@ -37,41 +75,20 @@ const CreateSurvey = ({ navigation }) => {
             <TextInput style={{ height: 40, width: 350, left: 20, paddingLeft: 10, backgroundColor: 'lightgrey' }}
                 placeholderTextColor={'grey'}
                 placeholder='Enter End Date'
-                keyboardType='numeric'>
+                keyboardType='numeric'
+                onChangeText={n => setenddate(n)}>
+
             </TextInput>
-            {/* <View style={{ flexDirection: 'row', alignItems: 'center', width: '70%', marginTop: -10, marginBottom: 5 }}>
-          <View style={{ flex: 1, height: 1.5, backgroundColor: 'darkgrey' }} />
-        </View> */}
-            <Text style={{ color: "black", fontSize: 18, left: 15 }}>
-                Select your degree
-            </Text>
-            <Picker style={styles.PickerView}
-                selectedValue={Degree}
-                onValueChange={(Itemvalue) => { setDegree(Itemvalue) }}>
-                <Picker.Item label='BSCS' value='BSCS' />
-                <Picker.Item label='BSIT' value='BSIT' />
-            </Picker>
-            <Text style={{ color: "black", fontSize: 18, left: 15 }}>
-                Select city
-            </Text>
-            <Picker style={{
-                backgroundColor: 'lightgrey',
-                // top: 10,
-                height: 40, width: 350, left: 20, paddingLeft: 10,
-            }}
-                selectedValue={City}
-                onValueChange={(Itemvalue) => { setCity(Itemvalue) }}>
-                <Picker.Item label='Chakwal' value='Chakwal' />
-                <Picker.Item label='Rawalpindi' value='Rawalpindi' />
-                <Picker.Item label='Swabi' value='Swabi' />
-                <Picker.Item label='Islamabad' value='Islamabad' />
-            </Picker>
             <Button
-                style={{ top: 10, height: 40, width: 350, left: 20, paddingLeft: 10, }}
+                style={{ top: 15, height: 40, width: 350, left: 20, paddingLeft: 10, }}
                 mode="contained"
-                onPress={() =>
-                    navigation.navigate('ConductedSurveys')}>
-                Create Survey
+                onPress={() => {
+                    console.log(title)
+                    console.log(startdate)
+                    console.log(enddate)
+                    saveUser()
+                }}>
+                Post Survey
             </Button>
         </View>
     )

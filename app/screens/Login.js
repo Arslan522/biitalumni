@@ -7,39 +7,36 @@ import MainScreen from './MainScreen';
 import Drawer from '../screens/Drawers';
 import { Picker } from '@react-native-picker/picker';
 import { Item } from 'react-native-paper/lib/typescript/components/List/List';
-
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { log } from 'react-native-reanimated';
 
 
 export default function Login({ navigation }) {
 
-  const [type, setType] = useState("");
-  const [Aridno, setAridno] = useState();
-  const [pass, setPass] = useState();
+  const [type, setType] = useState('Admin');
+  const [Aridno, setAridno] = useState('2019-Arid-0078');
+  const [pass, setPass] = useState('arslan');
   const [users, setUsers] = useState();
-
+  const [hidePass, setHidePass] = useState(true);
+  global.aridno = Aridno;
+  //console.log(global.aridno);
   async function loginUser() {
 
     let response = await fetch
-      ('http://192.168.211.97/FypAlumni/api/student/Login?aridno=' + Aridno + '&password=' + pass + '&isadmin=' + type)
+      (global.apiurl +'student/Login?aridno=' + Aridno + '&password=' + pass + '&type=' + type)
     let json = await response.text();
     console.log(JSON.stringify(json))
     setUsers(json)
+    global.aid=json;
+    console.log("json new...........", json);
+    //global.aridnum=json.aridno
     if (json === "\"No Account Found\"") {
       alert("No Account Found. Try Again!")
     }
     else {
       navigation.navigate('Drawer')
     }
-    // else if(json=="Shop Verified"){
-    //   //i will save pnum in shared preferences
-    //   global.user=pnum
-
-    //   navigation.navigate('ShopKeeper Home')
-    // }
-
   }
-
-
 
   return (
     <ScrollView>
@@ -50,8 +47,9 @@ export default function Login({ navigation }) {
           <Picker
             selectedValue={type}
             onValueChange={(Itemvalue) => { setType(Itemvalue) }}>
-            <Picker.Item label='Admin' value='yes' />
-            <Picker.Item label='Alumni' value='no' />
+            <Picker.Item label='Admin' value='Admin' />
+            <Picker.Item label='Alumni' value='Alumni' />
+            <Picker.Item label='Student' value='Student' />
           </Picker>
         </View>
         <Text style={styles.signintxt}>
@@ -69,6 +67,7 @@ export default function Login({ navigation }) {
           placeholderTextColor={'grey'}
           placeholder='Reg-No'
           style={styles.input}
+          value={Aridno}
           onChangeText={n => setAridno(n)}
         />
         <View style={{
@@ -82,6 +81,7 @@ export default function Login({ navigation }) {
           <View style={{
             flex: 1,
             height: 1.5,
+            backgroundColor: 'darkgrey'
           }}
           />
         </View>
@@ -89,17 +89,24 @@ export default function Login({ navigation }) {
           Password
         </Text>
         <TextInput
-          require={true}
+          placeholder="Enter Your Password..."
           placeholderTextColor={'grey'}
-          placeholder='Enter Your Password..'
-          secureTextEntry
           style={styles.input2}
-          onChangeText={n => setPass(n)} />
+          value={pass}
+          onChangeText={setPass}
+          secureTextEntry={hidePass ? true : false}
+        />
+        <Icon style={{ bottom: 34, left: 125, fontSize: 18, color: 'grey' }}
+          name={hidePass ? 'visibility' : 'visibility-off'}
+          onPress={() => setHidePass(!hidePass)}
+        />
+
+
         <View style={{
           flexDirection: 'row',
           alignItems: 'center',
           width: '70%',
-          marginTop: -10,
+          marginTop: -28,
           marginBottom: 5
         }}
         >
@@ -152,7 +159,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightgrey',
     width: '50%',
     // marginStart:40,
-    marginTop: '5%',
+    marginTop: '10%',
     marginBottom: '3%'
   },
   login:
@@ -176,8 +183,8 @@ const styles = StyleSheet.create({
   },
   input2: {
     width: 300,
-    height: 50,
-    padding: 10,
+    // height: 50,
+    // padding: -40,
     marginLeft: 24,
     color: 'black',
     left: -7.5,
@@ -187,7 +194,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center', marginTop: 30,
   },
   V1: {
-    height: '100%',
+    top: 10,
+    // height: '100%',
     alignItems: 'center',
     justifyContent: "center"
   },
