@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TextInput, Image, ScrollView, Alert } from 'react-native'
-import { Button, } from 'react-native-paper';
+import { Button, getCombinedStyles, } from 'react-native-paper';
 //import bgImage from '../assets/logo.png'
 import React, { useState } from 'react';
 import Login from './Login';
@@ -7,6 +7,7 @@ import Imageppicker from './Imageppicker';
 import avatarImage from '../assets/logo.png';
 import { launchImageLibrary } from 'react-native-image-picker';
 import Toast from 'react-native-simple-toast'
+import { Picker } from '@react-native-picker/picker';
 
 
 //global.apiUrl = 'http://192.168.230.97/FypAlumni/api/student/'
@@ -18,20 +19,26 @@ export default function Signup({ navigation }) {
   const [email, setemail] = useState();
   const [phone, setphone] = useState();
   const [session, setsession] = useState();
-  const [skill, setskills] = useState();
+  const [skill, setskill] = useState();
+  const [gender, setgender] = useState();
+  const [type, settype] = useState();
+  const [city, setcity] = useState();
+
+
+
   const [imgsrc, setImagesrc] = useState(Image.resolveAssetSource(avatarImage).uri)
   const [image, setImage] = useState({})
 
 
-  const Dialog=()=>
+  const Dialog = () =>
     Alert.alert(
       "Signed Up..",
       "Successfully..",
       [
         {
-          text:"Login",
-          onPress:(()=>{navigation.navigate("Login")})
-      }])
+          text: "Login",
+          onPress: (() => { navigation.navigate("Login") })
+        }])
 
   async function saveUser() {
 
@@ -42,22 +49,27 @@ export default function Signup({ navigation }) {
       upass: password,
       uemail: email,
       ucontact: phone,
+      uskills: skill,
+      usession:session,
+      ugender:gender,
+      utype:type,
+      ucity:city,
       // ucity: "",
       // utype: "",
     }
     //console.log(user);
     const data = new FormData()
-    // data.append('name', 'hello')
+    data.append('name', 'hello')
     data.append('UserPhoto', { uri: image.uri, type: image.type, name: image.fileName })
     console.log('calling saveuser...........', global.apiurl, data)
     //console.log(data);
     let response = await fetch
-      (global.apiurl + `student/SignUpp?ufname=${user.ufname}&ulname=${user.ulname}&uarid=${user.uarid}
-      &upass=${user.upass}&uemail=${user.uemail}&ucontact=${user.ucontact}`,
+      (global.apiurl+`student/signupp?ufname=${user.ufname}&ulname=${user.ulname}&uarid=${user.uarid}
+      &upass=${user.upass}&uemail=${user.uemail}&ucontact=${user.ucontact}&uskills=${user.uskills}&usession=${user.usession}&ugender=${user.ugender}&utype=${user.utype}&ucity=${user.ucity}`,
         {
           method: 'POST',
           headers: {
-           'Content-type':'multipart/form-data'
+            'Content-type': 'multipart/form-data'
           },
           body: data
         })
@@ -69,7 +81,7 @@ export default function Signup({ navigation }) {
     if (json == "Registered Successfull") {
       Dialog();
       //Toast.show("User Registered Successfully...")
-     
+
     }
     else {
       Alert.alert('Unsuccessfull')
@@ -100,75 +112,94 @@ export default function Signup({ navigation }) {
 
   return (
     <ScrollView >
-      <View style={{alignItems: 'center'}}>
-        
-        <Text style={styles.con}>Signup</Text>
+      <View style={{ alignItems: 'center' }}>
+
         {/* //<Imageppicker/> */}
-        <View style={{ backgroundColor: "lightgrey", alignItems: 'center',paddingTop:30 }}>
-          <Image source={{ uri: imgsrc }} style={{ width: 100, height: 100, backgroundColor: "white", borderRadius: 20, right: 45, borderWidth: 1, borderColor: "black" }} />
+        <View style={{ backgroundColor: "lightgrey", alignItems: 'center', paddingTop: 30 }}>
+          <Image source={{ uri: imgsrc }} style={{ width: 100, height: 100, backgroundColor: "white", borderRadius: 20,left:2,bottom:19, borderWidth: 1, borderColor: "black" }} />
           <View style={{ margintop: 10, left: 5, justifyContent: 'center', alignItems: 'center' }}>
-            <Button color='black' onPress={openGallery} >select profile</Button>
-            </View>
-        <Text style={styles.simpletext}>
-          Name
-        </Text>
-        
-        <View style={{ flexDirection: 'row', right: 54 }}>
+            <Button 
+              mode="contained"
+            color='red' onPress={openGallery}  style={{bottom:15,width:155}} >select profile</Button>
+          </View>
+          <Text style={styles.simpletext}>
+            Name
+          </Text>
 
-          <TextInput
-            onChangeText={n => setfname(n)}
-            value={fname}
-            placeholder='First Name'
-            style={styles.fname} />
+          <View style={{ flexDirection: 'row', right: 54 }}>
 
-          <TextInput
-            onChangeText={n => setlname(n)}
+            <TextInput
+              onChangeText={n => setfname(n)}
+              value={fname}
+              placeholder='First Name'
+              style={styles.fname} />
+
+            <TextInput
+              onChangeText={n => setlname(n)}
               value={lname}
-            placeholder='Last Name'
-            style={styles.lname} />
-        </View>
-        <Text style={{ right: 120, bottom: 9 }}>
-          Arid-No
-        </Text>
-        <Text style={{ left: 40, bottom: 28.5 }}>
-          Password
-        </Text>
-        <View style={{ flexDirection: "row" }}>
-          <TextInput
-            onChangeText={n => setaridno(n)}
+              placeholder='Last Name'
+              style={styles.lname} />
+          </View>
+          <Text style={{ right: 144, bottom: 9 }}>
+            Arid-No
+          </Text>
+          <Text style={{ left: 76, bottom: 28.5 }}>
+            Password
+          </Text>
+          <View style={{ flexDirection: "row" }}>
+            <TextInput
+              onChangeText={n => setaridno(n)}
               value={aridno}
-            placeholder='2019-Arid-0078'
-            style={styles.inputt}
-          // left={<Icon name='user'/>}
-          //underlineColorAndroid="transparent"
-          />
-          <TextInput
-            label="Password"
-            returnKeyType="done"
-            onChangeText={n => setpassword(n)}
-              value={password}
-            placeholder='Enter Password'
-            secureTextEntry
+              placeholder='2019-Arid-0078'
               style={{
+                // width: 145,
                 height: 40,
                 padding: 10,
-                right: 18,
-                bottom: 24,
-                marginLeft: 30,
+                bottom: 21,
+                width: 150,
+                // marginLeft: 3,
+                marginLeft: 22,
                 // marginTop: 10,
                 // marginBottom: 10,
                 borderColor: 'grey',
                 borderWidth: 1,
                 borderRadius: 18,
                 backgroundColor: '#F8F0E3',
-                color: 'black',}} />
-        </View>
+                color: 'black',
+              }}
+            // left={<Icon name='user'/>}
+            //underlineColorAndroid="transparent"
+            />
+            <TextInput
+              label="Password"
+              returnKeyType="done"
+              onChangeText={n => setpassword(n)}
+              value={password}
+              placeholder='Enter Password'
+              secureTextEntry
+              style={{
+                height: 40,
+                padding: 10,
+                right: 18,
+                width:150,
+                bottom: 24,
+                right:20,
+                marginLeft: 80,
+                // marginTop: 10,
+                // marginBottom: 10,
+                borderColor: 'grey',
+                borderWidth: 1,
+                borderRadius: 18,
+                backgroundColor: '#F8F0E3',
+                color: 'black',
+              }} />
+          </View>
 
-        
-          <Text style={{ right: 126, bottom: 10 }}>
+
+          <Text style={{ right: 151, bottom: 10 }}>
             Email
           </Text>
-          <Text style={{ left: 57, bottom: 28 }}>
+          <Text style={{ left: 90, bottom: 28 }}>
             Phone Number
           </Text>
           <View style={{ flexDirection: "row" }}>
@@ -184,11 +215,13 @@ export default function Signup({ navigation }) {
               value={email}
               placeholder='someone@gmail'
               style={{
+                // width: 145,
                 height: 40,
                 padding: 10,
-                right: 28,
-                bottom: 24,
-                marginLeft: 30,
+                bottom: 21,
+                width: 150,
+                // marginLeft: 3,
+                marginLeft: 22,
                 // marginTop: 10,
                 // marginBottom: 10,
                 borderColor: 'grey',
@@ -206,9 +239,11 @@ export default function Signup({ navigation }) {
               style={{
                 height: 40,
                 padding: 10,
-                right: 38,
+                right: 18,
+                width: 150,
                 bottom: 24,
-                marginLeft: 30,
+                right: 20,
+                marginLeft: 80,
                 // marginTop: 10,
                 // marginBottom: 10,
                 borderColor: 'grey',
@@ -217,13 +252,13 @@ export default function Signup({ navigation }) {
                 backgroundColor: '#F8F0E3',
                 color: 'black',
               }} />
-              
+
           </View>
-          <Text style={{ right: 126, bottom: 10 }}>
+          <Text style={{ right: 152, bottom: 10 }}>
             Skills
           </Text>
-          <Text style={{ left: 57, bottom: 28 }}>
-            Section
+          <Text style={{ left: 67, bottom: 28 }}>
+            Session
           </Text>
           <View style={{ flexDirection: "row" }}>
 
@@ -234,15 +269,17 @@ export default function Signup({ navigation }) {
               // autoCompleteType="email"
               textContentType="emailAddress"
               // keyboardType="email-address"
-              onChangeText={n => setskills(n)}
+              onChangeText={n => setskill(n)}
               value={skill}
               placeholder='Enter Skills'
               style={{
+                // width: 145,
                 height: 40,
                 padding: 10,
-                right: 65,
-                bottom: 24,
-                marginLeft: 30,
+                bottom: 21,
+                width: 150,
+                // marginLeft: 3,
+                marginLeft: 22,
                 // marginTop: 10,
                 // marginBottom: 10,
                 borderColor: 'grey',
@@ -260,9 +297,11 @@ export default function Signup({ navigation }) {
               style={{
                 height: 40,
                 padding: 10,
-                right: 38,
+                right: 18,
+                width: 150,
                 bottom: 24,
-                marginLeft: 30,
+                right: 20,
+                marginLeft: 80,
                 // marginTop: 10,
                 // marginBottom: 10,
                 borderColor: 'grey',
@@ -273,19 +312,113 @@ export default function Signup({ navigation }) {
               }} />
           </View>
 
-        <Button mode="contained"
-          onPress={() => { saveUser() }}
-          style={styles.btn}>
-          Signup
-        </Button>
-      </View>
+
+
+
+
+
+
+          <Text style={{ right: 153, bottom: 10 }}>
+            Type
+          </Text>
+          <Text style={{ left: 78, bottom: 28 }}>
+            Seclect City
+          </Text>
+          <View style={{ flexDirection: "row" }}>
+
+            <TextInput
+              label="Email"
+              returnKeyType="next"
+              autoCapitalize="none"
+              onChangeText={n => settype(n)}
+              value={type}
+              placeholder='Alumni/student'
+              style={{
+                // width: 145,
+                height: 40,
+                padding: 10,
+                right:2,
+                bottom: 21,
+                width: 150,
+                // marginLeft: 3,
+                marginLeft: 22,
+                // marginTop: 10,
+                // marginBottom: 10,
+                borderColor: 'grey',
+                borderWidth: 1,
+                borderRadius: 18,
+                backgroundColor: '#F8F0E3',
+                color: 'black',
+              }}
+            />
+            <Picker style={styles.PickerView}
+              selectedValue={city}
+              onValueChange={(Itemvalue) => { setcity(Itemvalue) }}>
+              <Picker.Item label='islamabad' value='islamabad' />
+              <Picker.Item label='Rawalpindi' value='Rawalpindi' />
+              <Picker.Item label='Faisalabad' value='Faisalabad' />
+              <Picker.Item label='Chakwal' value='Chakwal' />
+              <Picker.Item label='Mansehra' value='Mansehra' />
+              <Picker.Item label='Lahore' value='Lahore' />
+              <Picker.Item label='Multan' value='Multan' />
+              <Picker.Item label='Swabi' value='Swabi' />
+              <Picker.Item label='Karachi' value='Karachi' />
+              <Picker.Item label='Rawat' value='Rawat' />
+            </Picker>
+
+            
+          </View>
+
+
+<View>
+            <Text style={{ right: 55, bottom: 28 }}>
+              Gender
+            </Text>
+            <Picker style={styles.PickerView1}
+              selectedValue={gender}
+              onValueChange={(Itemvalue) => { setgender(Itemvalue) }}>
+              <Picker.Item label='Male' value='Male' />
+              <Picker.Item label='Female' value='Female' />
+            </Picker>
+</View>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          <Button mode="contained"
+            onPress={() => { saveUser() }}
+            style={styles.btn}>
+            Signup
+          </Button>
+        </View>
       </View>
     </ScrollView>
   )
 }
 const styles = StyleSheet.create({
   simpletext: {
-    right: 124,
+    right: 144,
     bottom: 25,
   },
   lname: {
@@ -293,8 +426,10 @@ const styles = StyleSheet.create({
     height: 40,
     padding: 10,
     bottom: 21,
-    left: 50,
-    marginLeft: 10,
+    width:150,
+
+    // left: 50,
+    marginLeft:60,
 
     // marginTop: 10,
     // marginBottom: 10,
@@ -309,7 +444,9 @@ const styles = StyleSheet.create({
     height: 40,
     padding: 10,
     bottom: 21,
-    marginLeft: 3,
+    width:150,
+    // marginLeft: 3,
+    marginLeft:110,
     // marginTop: 10,
     // marginBottom: 10,
     borderColor: 'grey',
@@ -337,7 +474,7 @@ const styles = StyleSheet.create({
 
     justifyContent: 'center',
   },
-  
+
   con: {
     fontWeight: 'bold',
     fontSize: 26,
@@ -350,5 +487,40 @@ const styles = StyleSheet.create({
     marginTop: 11,
     borderRadius: 20,
     bottom: 21,
-  }
+    color:'red'
+  },
+  
+            PickerView: {
+              height: 40,
+              padding: 10,
+              right: 18,
+              width: 140,
+              bottom: 24,
+              right: 20,
+              marginLeft: 85,
+              // marginTop: 10,
+              // marginBottom: 10,
+              borderColor: 'grey',
+              borderWidth: 1,
+              borderRadius: 18,
+              backgroundColor: '#F8F0E3',
+              color: 'black',
+            },
+  PickerView1: {
+    height: 40,
+    padding: 10,
+    // right: 18,
+    width: 140,
+    bottom: 24,
+    right:146,
+    // right: 20,
+    marginLeft: 85,
+    // marginTop: 10,
+    // marginBottom: 10,
+    borderColor: 'grey',
+    borderWidth: 1,
+    borderRadius: 18,
+    backgroundColor: '#F8F0E3',
+    color: 'black',
+  },
 })

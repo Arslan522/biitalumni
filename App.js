@@ -29,8 +29,8 @@ import Modals from './app/screens/Modal';
 
 //192.168.100.42 wifi
 //192.168.232.97 mobile
-global.apiurl = 'http://192.168.100.42/FypAlumni/api/';
-global.imageUrl = 'http://192.168.100.42/FypAlumni/Content/Image/';
+global.apiurl = 'http://192.168.29.97/FypAlumni/api/';
+global.imageUrl = 'http://192.168.29.97/FypAlumni/Content/Image/';
 const Stack = createStackNavigator();
 
 const App = () => {

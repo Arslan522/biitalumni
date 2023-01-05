@@ -18,6 +18,7 @@ export default function Login({ navigation }) {
   const [pass, setPass] = useState('arslan');
   const [users, setUsers] = useState();
   const [hidePass, setHidePass] = useState(true);
+  console.log(global.aridno)
   global.aridno = Aridno;
   //console.log(global.aridno);
   async function loginUser() {

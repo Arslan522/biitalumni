@@ -22,8 +22,9 @@ const CreateJob = ({ navigation }) => {
     async function saveUser() {
         console.log('calling creating job...........',)
         console.log('create job page', global.aridno);
+
         let response = await fetch
-            (global.apiUrl+'student/CreateJob',
+            (global.apiurl+'student/CreateJob',
                 {
                     method: 'POST',
                     headers: {
@@ -36,7 +37,7 @@ const CreateJob = ({ navigation }) => {
                         cgpa: cgpa,
                         platform: platform,
                         city: city,
-                        Aridno: global.aridno,
+                        aridno: global.aridno,
                     })
                 })
         let json = await response.json()

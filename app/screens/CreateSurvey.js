@@ -9,20 +9,23 @@ import job from './Jobs';
 import ConductedSurveys from './ConductedSurveys';
 import AddQuestion from './AddQuestion';
 import { Alert } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const CreateSurvey = ({ navigation }) => {
 
     const [title, settitle] = useState();
     const [startdate, setstartdate] = useState();
     const [enddate, setenddate] = useState();
+    const [aridno, setaridno] = useState();
 
 
 
 
-    async function saveUser() {
+
+    async function saveSurvey() {
         console.log('calling Creating Survey...........',)
         let response = await fetch
-            ('http://192.168.100.42/FypAlumni/api/student/CreateSurvey',
+            (global.apiurl+'student/CreateSurvey',
                 {
                     method: 'POST',
                     headers: {
@@ -33,23 +36,24 @@ const CreateSurvey = ({ navigation }) => {
                         title: title,
                         start_date: startdate,
                         end_date: enddate,
+                        aridno:global.aridno,
                     })
                 })
         let json = await response.json()
         console.log(JSON.stringify(json))
-        if (json == "Survey Added") {
-            Alert.alert('Survey', ' Posting Unsuccessfull')
+        if (json == "Survey Created") {
+            Alert.alert('Survey', ' Forwarded to Admin')
 
         }
         else {
-            Alert.alert('Survey', 'Added to database')
+            Alert.alert('Survey', 'Notadded ')
             navigation.navigate("AddQuestion")
         }
     }
 
 
     return (
-        <View style={{ height: '100%' }}>
+        <ScrollView>
             <Image source={bgImage} style={styles.bg} />
             <Text style={{ color: "black", fontSize: 18, left: 15 }}>
                 Title for the survey
@@ -79,6 +83,50 @@ const CreateSurvey = ({ navigation }) => {
                 onChangeText={n => setenddate(n)}>
 
             </TextInput>
+            <Text style={{ color: "black", fontSize: 18, left: 15 }}>
+                Enter at least 5 Questions
+            </Text>
+            <TextInput style={styles.question}
+                placeholderTextColor={'grey'}
+                placeholder='Question 1'
+                onChangeText={n => setstartdate(n)}>
+            </TextInput>
+            <TextInput style={styles.question}                placeholderTextColor={'grey'}
+                placeholder='Question 2'
+                onChangeText={n => setstartdate(n)}>
+            </TextInput>
+            <TextInput style={styles.question}                placeholderTextColor={'grey'}
+                placeholder='Question 3'
+                onChangeText={n => setstartdate(n)}>
+            </TextInput>
+            <TextInput style={styles.question}                placeholderTextColor={'grey'}
+                placeholder='Question 4'
+                onChangeText={n => setstartdate(n)}>
+            </TextInput>
+            <TextInput style={styles.question}                placeholderTextColor={'grey'}
+                placeholder='Question 5'
+                onChangeText={n => setstartdate(n)}>
+            </TextInput>
+            <TextInput style={styles.question}                placeholderTextColor={'grey'}
+                placeholder='Question 6'
+                onChangeText={n => setstartdate(n)}>
+            </TextInput>
+            <TextInput style={styles.question}                placeholderTextColor={'grey'}
+                placeholder='Question 7'
+                onChangeText={n => setstartdate(n)}>
+            </TextInput>
+            <TextInput style={styles.question}                placeholderTextColor={'grey'}
+                placeholder='Question 8'
+                onChangeText={n => setstartdate(n)}>
+            </TextInput>
+            <TextInput style={styles.question}                placeholderTextColor={'grey'}
+                placeholder='Question 9'
+                onChangeText={n => setstartdate(n)}>
+            </TextInput>
+            <TextInput style={styles.question}                placeholderTextColor={'grey'}
+                placeholder='Question 10'
+                onChangeText={n => setstartdate(n)}>
+            </TextInput>
             <Button
                 style={{ top: 15, height: 40, width: 350, left: 20, paddingLeft: 10, }}
                 mode="contained"
@@ -86,16 +134,17 @@ const CreateSurvey = ({ navigation }) => {
                     console.log(title)
                     console.log(startdate)
                     console.log(enddate)
-                    saveUser()
+                    saveSurvey()
                 }}>
                 Post Survey
             </Button>
-        </View>
+        </ScrollView >
     )
 }
 const styles = StyleSheet.create
     (
         {
+            question: { height: 40, width: 350, left: 20, paddingLeft: 10, marginBottom: 6, backgroundColor: 'lightgrey' },
             PickerView: {
                 backgroundColor: 'lightgrey',
                 margintop: 10,
@@ -104,8 +153,11 @@ const styles = StyleSheet.create
             },
             bg: {
                 justifyContent: 'center',
-                marginTop: 30,
-                left: 80,
+                marginTop: 10,
+                width:100,
+                marginBottom:40,
+                height:100,
+                left: 140,
             },
 
 

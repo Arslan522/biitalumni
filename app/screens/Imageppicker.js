@@ -22,7 +22,7 @@ export default function Imageppicker() {
   const [alumniid, setalumniid] = useState();
 
 
-  console.log('Calling add item.....', global.apiUrl, JSON.stringify(image))
+  console.log('Calling add item.....', global.apiurl, JSON.stringify(image))
   async function addPost() {
     let user = {
       postdisc: postdiscription,
