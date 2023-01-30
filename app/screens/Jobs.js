@@ -1,197 +1,213 @@
-
-import React, { useState } from "react";
-import { Image, ImageBackground, View } from "react-native";
-import { FlatList, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, FlatList, Image, ScrollView } from 'react-native'
+import React from 'react'
+import { useState, useEffect } from 'react'
+import { parse } from '@babel/core'
+import avatarImage from '../assets/logo.png';
+import Icon from "react-native-vector-icons/MaterialIcons";
+import CreateJob from './CreateJob';
+import { Searchbar } from 'react-native-paper';
+import { SafeAreaView, StatusBar, TouchableOpacity } from "react-native";
 import SearchStudent from "./SearchStudent";
 import bgImage from '../assets/logoo.png';
-import { ScrollView } from "react-native-gesture-handler";
-import Icon from "react-native-vector-icons/MaterialIcons";
-import Modals from "./Modal";
+
+//import QRCode from 'react-native-qrcode-generator'
+
+export default function Jobs({ navigation }) {
+  const [Data, setData] = useState([]);
+  const [query, setQuery] = useState('');
+  const [product, setproduct] = useState([]);
+  const [filterProduct, setfilterProduct] = useState([])
+  // const [imgsrc, setImagesrc] = useState(Image.resolveAssetSource(avatarImage).uri)
+  // const [image, setImage] = useState({})
 
 
-const  DATA = [
-  {
-    id: "s3",
-    title: "React Native Developer",
-    job: "BSCS",
-    detail: "working as Software Developer",
-    company: "Global",
-  },
-  {
-    id: "s2",
-    title: "Flutter FrontEnd",
-  },
-  {
-    id: "s1",
-    title: "IOS/Swift ",
-  },
-  {
-    id: "s4",
-    title: "Sql DataBase Creater",
-  },
-  {
-    id: "s5",
-    title: "Android Developer Needed",
-  },
-  {
-    id: "s6",
-    title: "Swift Developer Needed Experience 2 year",
-  },
-  {
-    id: "s8",
-    title: "",
-  },
-  {
-    id: "s9",
-    title: "Student 8",
-  },
-  {
-    id: "s10",
-    title: "Student 9",
-  },
-  {
-    id: "s11",
-    title: "Student 10",
-  },
-  {
-    id: "s12",
-    title: "Student 11",
-  },
-  {
-    id: "s31",
-    title: "Student 12",
-    detail: "BCS",
-    job: ""
+  useEffect(() => {
+    ViewJobs()
+  }, [])
+  //console.log("Products shown here",getProduct)
 
-  },
-];
+  async function ViewJobs() {
+    //  let id = await AsyncStorage.getItem("userId")
+    let response = await fetch
+      (global.apiurl + 'student/getthejobs')
 
-const Item = ({ item, onPress, backgroundColor, textColor }) => (
-  <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
-    <View style={{ flexDirection: 'row' }}>
-      <Image source={bgImage} />
-      <View style={{ flexDirection: "column" }}>
-        <Text style={[styles.title, textColor]}>{item.title}
-        </Text>
-        <Text style={[styles.job, textColor]}>Degree: {item.job}
-        </Text>
-        <Text style={[styles.detail, textColor]}>Detail: {item.detail}
-        </Text>
+    let json = await response.json();
+    console.log(JSON.stringify(json));
+    setData(json);
+    setproduct(json.slice())
+
+    //console.log("this wil  show profile...............",global.apiurl +'student/getalumni',json)
+  }
+  console.log(global.aridno)
+
+  const onChangeSearch = text => {
+    setQuery(text);
+    if (text.length > 0) {
+      text = text.toLowerCase();
+      const filter = product.filter(ele =>
+        ele?.city?.toLowerCase().includes(text),
+      );
+      setfilterProduct(filter);
+    }
+    else {
+
+      setfilterProduct([])
+    }
+  };
+  ///global.shopPhone
+  return (
+    <View style={{ flex: 1 }}>
+      <Searchbar
+        style={{borderRadius:50}}
+        onChangeText={(e) => onChangeSearch(e)}
+        value={query}
+        // onChange={(e)=>onChangeSearch(e)}  
+        placeholder="Search by name/skills.."
+      />
+
+      {/* <View
+        style={{
+          borderWidth: 1,
+          backgroundColor: "#2196F3",
+          borderRadius: 30,
+          width: 100,
+          height: 50,
+          left: 250,
+          bottom: -6,
+        }}>
+        <Icon
+          name="add-circle-outline"
+          size={30}
+          color="#FFFF90"
+          onPress={() => {
+            navigation.navigate("CreateJob")
+
+          }}
+          style={{ textAlign: "right", right: 33, top: 2 }}>
+        </Icon>
+        <Text
+          style={{
+            color: "white",
+            fontWeight: "bold",
+            textAlign: "center",
+            bottom: 1
+          }}>
+          Create Job</Text> 
+      </View>*/}
+
+      <View style={{
+        padding: 5,
+      }}>
+        
+        <View
+          style={{
+            backgroundColor: '#fff',
+            borderColor: 'black',
+            paddingVertical: 10,
+            paddingHorizontal: 10,
+            elevation: 10,
+            borderTopLeftRadius: 15,
+            borderTopRightRadius: 15,
+            borderBottomLeftRadius: 15,
+            borderBottomRightRadius: 15,
+          }}>
+          
+        <FlatList
+          data={query.length > 0 ? filterProduct : product}
+          keyExtractor={(i) => i.id}
+          renderItem={({ item }) => {
+            console.log(item);
+            
+            return (
+
+              <View style={{
+                borderColor: 'black',
+                paddingVertical: 10,
+                paddingHorizontal: 10,
+                elevation: 10,
+                borderTopLeftRadius: 15,
+                borderTopRightRadius: 15,
+                borderBottomLeftRadius: 15,
+                borderBottomRightRadius: 15,
+                flexDirection: 'row',
+                margin: 7,
+                backgroundColor: 'lightgrey'
+}} key={item.key}>
+                
+                <View style={styles.infoContainer}>
+                  <View style={{ flexDirection: "row" }}>
+                    <Text style={{ color: 'black', fontSize: 18, fontWeight: "bold" }} >Title         : </Text>
+                    <Text style={{ color: 'black', fontSize: 17 }}>{item.job_title}</Text>
+                  </View>
+                  <View style={{ flexDirection: "row" }}>
+                    <Text style={{ color: 'black', fontSize: 17, fontWeight: "bold" }}>Company : </Text>
+                    <Text style={{ color: 'black', fontSize: 17 }}>{item.company}</Text>
+                  </View>
+                  <View style={{ flexDirection: "row" }}>
+
+                    <Text style={{ color: 'black', fontSize: 17, fontWeight: "bold", right: -0.7 }}>City           : </Text>
+                    <Text style={{ color: 'black', fontSize: 17 }}>{item.city}</Text>
+                  </View>
+                </View>
+              </View>
+            )
+          }
+          } />
+          <View style={{ backgroundColor: "lightblue", borderRadius: 200, width: 60, bottom: 70, left: 300 }}>
+            <Icon
+              name="add"
+              size={60}
+              color="black"
+
+              style={{ position: "relative" }}
+              onPress={() => navigation.navigate("CreateJob")}
+            /></View>
+          </View>
       </View>
     </View>
-  </TouchableOpacity>
-);
-
-const Job = ({ navigation }) => {
-  const [selectedId, setSelectedId] = useState(null);
-
-  const renderItem = ({ item }) => {
-    const backgroundColor = item.id === selectedId ? "#6e3b6e" : "lightgrey";
-    const color = item.id === selectedId ? 'white' : 'black';
-
-    return (
-      <Item
-        item={item}
-        onPress={() =>
-          navigation.navigate('Signup')}>
-      </Item>
-
-
-    );
-  };
-
-  return (
-    <View >
-      <View style={{
-        flexDirection: "row",
-        borderColor: "black",
-        top: 10,
-        backfaceVisibility: "hidden"
-      }}>
-        <View
-          style={{
-            left: 40,
-            borderRadius: 70,
-          }}>
-          <Modals></Modals>
-        </View>
-        <View
-          style={{
-            borderWidth: 1,
-            backgroundColor: "#2196F3",
-            borderRadius: 30,
-            width: 100,
-            height: 50,
-            left: 165,
-            bottom: 1,
-          }}>
-          <Icon
-            name="add-circle-outline"
-            size={30}
-            color="#FFFF90"
-            onPress={() => {
-              navigation.navigate('CreateJob')
-            }}
-            style={{ textAlign: "right", right: 33, top: 2 }}>
-          </Icon>
-          <Text
-            style={{
-              color: "white",
-              fontWeight: "bold",
-              textAlign: "center",
-              bottom: 1
-            }}>
-            Create Job</Text>
-        </View>
-      </View>
-         
-       
-          <FlatList
-            style={{ top: 17, borderTopColor: "black", 
-            borderTopWidth: 2, borderColor: "black" }}
-            data={DATA}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id}
-            extraData={selectedId}
-            />
-    
-       
-            </View>
-
-    
-
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    // marginTop: StatusBar.currentHeight || 0,
-    top: 50,
+  FlatlistContainer: {
+    flexDirection: 'row',
+    margin: 7,
+    borderRadius: 10,
+    backgroundColor: 'lightgrey'
   },
-  item: {
-    padding: 16,
 
-    marginVertical: 8,
-    marginHorizontal: 16,
+  Text: {
+    fontSize: 15,
+    color: 'grey',
+
   },
-  title: {
 
-    fontSize: 20,
-    flexDirection: "column"
+  QRCode: {
+    marginLeft: 20,
   },
-  job: {
-    fontSize: 17,
-    flexDirection: "row"
+
+  imageContainer: {
+    height: 70,
+    width: 77,
+    marginLeft: 10,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    //backgroundColor:'red',
+
   },
-  detail: {
-    fontSize: 14,
-    flexDirection: "column"
 
-  }
-});
+  infoContainer: {
+    marginLeft: 20,
+    // flexDirection:"row",
+    // width:200,
+    // alignItems: 'flex-start',
+    // justifyContent: "space-evenly",
+    // width: 180,
+    // //backgroundColor:'#F0ECD5',
+
+  },
+})
 
 
 
-
-export default Job

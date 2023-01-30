@@ -10,7 +10,6 @@ import Toast from 'react-native-simple-toast'
 import { Picker } from '@react-native-picker/picker';
 
 
-//global.apiUrl = 'http://192.168.230.97/FypAlumni/api/student/'
 export default function Signup({ navigation }) {
   const [fname, setfname] = useState();
   const [lname, setlname] = useState();
@@ -23,12 +22,9 @@ export default function Signup({ navigation }) {
   const [gender, setgender] = useState();
   const [type, settype] = useState();
   const [city, setcity] = useState();
-
-
-
+  const [degree, setdegree] = useState();
   const [imgsrc, setImagesrc] = useState(Image.resolveAssetSource(avatarImage).uri)
   const [image, setImage] = useState({})
-
 
   const Dialog = () =>
     Alert.alert(
@@ -54,18 +50,16 @@ export default function Signup({ navigation }) {
       ugender:gender,
       utype:type,
       ucity:city,
-      // ucity: "",
-      // utype: "",
+      udegree:degree,
     }
-    //console.log(user);
     const data = new FormData()
-    data.append('name', 'hello')
     data.append('UserPhoto', { uri: image.uri, type: image.type, name: image.fileName })
     console.log('calling saveuser...........', global.apiurl, data)
-    //console.log(data);
     let response = await fetch
-      (global.apiurl+`student/signupp?ufname=${user.ufname}&ulname=${user.ulname}&uarid=${user.uarid}
-      &upass=${user.upass}&uemail=${user.uemail}&ucontact=${user.ucontact}&uskills=${user.uskills}&usession=${user.usession}&ugender=${user.ugender}&utype=${user.utype}&ucity=${user.ucity}`,
+      (global.apiurl +`student/signupp?ufname=${user.ufname}&ulname=${user.ulname}&uarid=${user.uarid}&upass=${user.upass}
+      &uemail=${user.uemail}&ucontact=${user.ucontact}&uskills=${user.uskills}
+      &usession=${user.usession}&ugender=${user.ugender}&utype=${user.utype}&ucity=${user.ucity}&udegree=${user.udegree}
+      `,
         {
           method: 'POST',
           headers: {
@@ -74,14 +68,8 @@ export default function Signup({ navigation }) {
           body: data
         })
     let json = await response.json()
-    console.log(JSON.stringify(json))
-    console.log(json);
-
-
     if (json == "Registered Successfull") {
       Dialog();
-      //Toast.show("User Registered Successfully...")
-
     }
     else {
       Alert.alert('Unsuccessfull')
@@ -321,8 +309,8 @@ export default function Signup({ navigation }) {
           <Text style={{ right: 153, bottom: 10 }}>
             Type
           </Text>
-          <Text style={{ left: 78, bottom: 28 }}>
-            Seclect City
+          <Text style={{ left: 66, bottom: 28 }}>
+            Degree
           </Text>
           <View style={{ flexDirection: "row" }}>
 
@@ -351,7 +339,89 @@ export default function Signup({ navigation }) {
                 color: 'black',
               }}
             />
-            <Picker style={styles.PickerView}
+
+
+
+            <TextInput
+              label="Degree"
+              returnKeyType="next"
+              autoCapitalize="none"
+              onChangeText={n => setdegree(n)}
+              value={degree}
+              placeholder='Enter your Degree'
+              style={{
+                height: 40,
+                padding: 10,
+                right: 18,
+                width: 150,
+                bottom: 24,
+                right: 20,
+                marginLeft: 80,
+                // marginTop: 10,
+                // marginBottom: 10,
+                borderColor: 'grey',
+                borderWidth: 1,
+                borderRadius: 18,
+                backgroundColor: '#F8F0E3',
+                color: 'black',
+              }}
+            />
+
+
+            
+          </View>
+
+            <Text style={{ right: 145, bottom: 7}}>
+              Gender
+            </Text>
+          <Text style={{ left: 76, bottom: 28 }}>
+            Select City
+          </Text>
+<View style={{flexDirection:"row"}}>
+
+            <Picker style={styles.PickerView1}
+              style={{
+                // width: 145,
+                height: 40,
+                padding: 10,
+                right: 2,
+                bottom: 21,
+                width: 150,
+                // marginLeft: 3,
+                marginLeft: 22,
+                // marginTop: 10,
+                // marginBottom: 10,
+                borderColor: 'grey',
+                borderWidth: 1,
+                borderRadius: 18,
+                backgroundColor: '#F8F0E3',
+                color: 'black',
+              }}
+              selectedValue={gender}
+              onValueChange={(Itemvalue) => { setgender(Itemvalue) }}>
+              <Picker.Item label='Male' value='Male' />
+              <Picker.Item label='Female' value='Female' />
+            </Picker>
+
+
+            <Picker 
+              style={{
+                height: 40,
+                padding: 10,
+                right: 18,
+                width: 150,
+                bottom: 24,
+                right: 20,
+                marginLeft: 80,
+                // marginTop: 10,
+                // marginBottom: 10,
+                borderColor: 'grey',
+                borderWidth: 1,
+                borderRadius: 18,
+                backgroundColor: '#F8F0E3',
+                color: 'black',
+              }}
+
               selectedValue={city}
               onValueChange={(Itemvalue) => { setcity(Itemvalue) }}>
               <Picker.Item label='islamabad' value='islamabad' />
@@ -364,21 +434,6 @@ export default function Signup({ navigation }) {
               <Picker.Item label='Swabi' value='Swabi' />
               <Picker.Item label='Karachi' value='Karachi' />
               <Picker.Item label='Rawat' value='Rawat' />
-            </Picker>
-
-            
-          </View>
-
-
-<View>
-            <Text style={{ right: 55, bottom: 28 }}>
-              Gender
-            </Text>
-            <Picker style={styles.PickerView1}
-              selectedValue={gender}
-              onValueChange={(Itemvalue) => { setgender(Itemvalue) }}>
-              <Picker.Item label='Male' value='Male' />
-              <Picker.Item label='Female' value='Female' />
             </Picker>
 </View>
 

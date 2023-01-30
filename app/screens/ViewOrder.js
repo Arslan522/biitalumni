@@ -15,7 +15,7 @@ export default function ViewOrder() {
   // data.append('name', 'hello')
   data.append('PostPhoto', { uri: image.uri, type: image.type, name: image.fileName })
 
-  console.log("get ..............",global.aridnum);
+  console.log("get ..............", global.aridnum);
   useEffect(() => {
     OrdersView()
   }, [])
@@ -25,7 +25,7 @@ export default function ViewOrder() {
     //  let id = await AsyncStorage.getItem("userId")
     let response = await fetch
       (global.apiurl + 'student/getalumni')
-      
+
     let json = await response.json();
     console.log(JSON.stringify(json));
     setdata(json);
@@ -37,7 +37,7 @@ export default function ViewOrder() {
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flexDirection: 'row', backgroundColor: '#16448F', padding: 15, color: 'white', bottom: 0, width: '100%', right: 0 }}>
-      <Text style={{ color: 'white', fontSize: 20, }}>Searched Result</Text>
+        <Text style={{ color: 'white', fontSize: 20, }}>Searched Result</Text>
       </View>
       <View >
         <FlatList
@@ -49,17 +49,18 @@ export default function ViewOrder() {
 
               <View style={styles.FlatlistContainer} key={item.key}>
                 <View style={styles.infoContainer}>
-                  <Image style={{ backgroundColor: "black", height: 70,
-                   width: 70, borderRadius: 50, top: 15, right: 10 }} 
-                    source={{ uri: global.imageUrl + `${item.image}` }}  />
+                  <Image style={{
+                    backgroundColor: "black", height: 70,
+                    width: 70, borderRadius: 50, top: 15, right: 10
+                  }}
+                    source={{ uri: global.imageUrl + `${item.image}` }} />
                   <Text style={{ color: 'black', fontSize: 18, left: 70, bottom: 50 }} >{item.fname} {item.lname} ({item.aridno})</Text>
                   <Text style={{ color: 'black', fontSize: 17, left: 70, bottom: 50 }}>{item.skills}</Text>
-                  </View>
-                
-
+                </View>
               </View>)
-          }
-          } />
+                                    }
+                       } 
+              />
       </View>
     </View>
   )
@@ -108,6 +109,3 @@ const styles = StyleSheet.create({
 
   },
 })
-
-
-

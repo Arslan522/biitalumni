@@ -1,151 +1,185 @@
-import React, { useState } from "react";
-import { Image, ImageBackground, View } from "react-native";
-import { FlatList, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, FlatList, Image, ScrollView } from 'react-native'
+import React from 'react'
+import { useState, useEffect } from 'react'
+import { parse } from '@babel/core'
+import avatarImage from '../assets/logo.png';
+import Icon from "react-native-vector-icons/MaterialIcons";
+import CreateJob from './CreateJob';
+import { Searchbar } from 'react-native-paper';
+import { SafeAreaView, StatusBar, TouchableOpacity } from "react-native";
 import SearchStudent from "./SearchStudent";
 import bgImage from '../assets/logoo.png';
-import Result from "./Result";
-import ScreenOfSurveys from "./ScreenOfSurvey";
-import Icon  from "react-native-vector-icons/MaterialIcons";
-import AddQuestion from "./AddQuestion";
-import RadioButtonss from "./RadioButtons";
-import { ScrollView } from "react-native-gesture-handler";
-const DATA = [
-  {
-    id: "s1",
-    title: "React Native",
-    detail: "Is React Native worth it in 2022",
-  },
-  {
-    id: "s2",
-    title:"Flutter",
-    detail: "Does Flutter have a future?",
-  },
-  {
-    id: "s3",
-    title: "IOS",
-    detail:"is ios developer a good career"
-  },
-  {
-    id: "s4",
-    title: "SQL Database ",
-    detial:"Is SQL database a good career?"
-  },
-  {
-    id: "s4",
-    title: "SQL Database ",
-    detial:"Is SQL database a good career?"
-  }, 
-  {
-    id: "s4",
-    title: "SQL Database ",
-    detial:"Is SQL database a good career?"
-  }, 
-  {
-    id: "s4",
-    title: "SQL Database ",
-    detial:"Is SQL database a good career?"
-  },  
-];
 
-const Item = ({ item, onPress, backgroundColor, textColor,navigation}) => (
-  <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
-    <View style={{ flexDirection: 'row' ,backgroundColor:"lightgrey"}}>
-      <Image source={bgImage} />
-    <View>
-      <Text style={{fontSize:15}}> Title of Survey 
-      </Text>
-      </View>
-      <View >
-<Text style={{fontSize: 20,
-    top:20,
-    right:80
-  }}>
-      {item.title}
-      </Text>
-      </View>
-    </View>
-  </TouchableOpacity>
-);
+//import QRCode from 'react-native-qrcode-generator'
 
-const ConductedSurveys = ({navigation}) => {
-  const [selectedId, setSelectedId] = useState(null);
+export default function ConductedSurveys({ navigation,props }) {
+  const [Data, setData] = useState([]);
+  const [query, setQuery] = useState('');
+  const [product, setproduct] = useState([]);
+  const [filterProduct, setfilterProduct] = useState([])
+  // const [imgsrc, setImagesrc] = useState(Image.resolveAssetSource(avatarImage).uri)
+  // const [image, setImage] = useState({})
 
-  const renderItem = ({ item }) => {
-    const backgroundColor = item.id === selectedId ? "#6e3b6e" : "#f9c2ff";
-    const color = item.id === selectedId ? 'white' : 'black';
+const onpress=(item)=>{
+  
+}
+  useEffect(() => {
+    ViewSurveys()
+  }, [])
+  //console.log("Products shown here",getProduct)
 
-    return (
-      <Item
-        item={item}
-        onPress={() =>
-          navigation.navigate('AddQuestion')}>
-        </Item>
-         );
-  };
+  async function ViewSurveys() {
+    //  let id = await AsyncStorage.getItem("userId")
+    let response = await fetch
+      (global.apiurl + 'student/getsurvey')
 
-  return (
-    <SafeAreaView >
-      <View 
-      style={{
-        borderWidth: 1, 
-        backgroundColor:"#2196F3",
-        borderRadius:30,
-        borderBottomColor:"black",
-        // height:20,
-         width:120,
-         height:60,
-         left:240,
-         top:10,
-        
-      }}>
-      <Icon  
-      name="add-circle-outline" 
-      size={30}  
-      color="#FFFF90"
+    let json = await response.json();
+    console.log("survey listt/..........",json);
+    setData(json);
 
-      onPress={() =>{
-        navigation.navigate('CreateSurvey')}}
-        style={{textAlign:"right",right:42}}>
-      </Icon>
-      <Text 
-        style={{textAlign:"right",right:16,color:"white"}}>
-      Create Survey</Text>
-      </View>
-      <ScrollView style={{top:40,borderTopColor:"black",borderTopWidth:2,borderColor:"black"}}>
-      <SafeAreaView style={styles.container}>
-      <FlatList
-      style={{bottom:40}}
-        data={DATA}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-        extraData={selectedId}
-      />
-    </SafeAreaView>
-    </ScrollView>
-    </SafeAreaView>
-  );
+    //console.log("this wil  show profile...............",global.apiurl +'student/getalumni',json)
+  }
+  console.log(global.aridno)
+const NextScreen = item => {
+  console.log('new data is here from survey page.............', item);
+  navigation.navigate('ShowSurvey', {datasurvey: item});
 };
+  ///global.shopPhone
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      
+      
+        <View
+          style={{
+            backgroundColor: '#fff',
+            borderColor: 'black',
+            paddingVertical: 10,
+            paddingHorizontal: 10,
+            elevation: 10,
+            borderTopLeftRadius: 15,
+            borderTopRightRadius: 15,
+            borderBottomLeftRadius: 15,
+            borderBottomRightRadius: 15,
+          }}>
+
+
+        <FlatList
+          data={Data}
+          renderItem={({ item }) => {
+           
+            return (
+              <View
+                style={{
+                  borderColor: 'black',
+                  paddingVertical: 10,
+                  paddingHorizontal: 10,
+                  elevation: 10,
+                  borderTopLeftRadius: 15,
+                  borderTopRightRadius: 15,
+                  borderBottomLeftRadius: 15,
+                  borderBottomRightRadius: 15,
+                  flexDirection: 'row',
+                  margin: 7,
+                  backgroundColor: 'lightgrey',
+                }}
+                key={item.key}>
+                <TouchableOpacity
+                  onPress={() => {
+                    NextScreen(item);
+                  }}>
+                  <View style={styles.infoContainer}>
+                    <View style={{flexDirection: 'row'}}>
+                      <Text
+                        style={{
+                          color: 'black',
+                          fontSize: 18,
+                          fontWeight: 'bold',
+                        }}>
+                        Title :{' '}
+                      </Text>
+                      <Text style={{color: 'black', fontSize: 17, left: 2}}>
+                        {' '}
+                        {item.title}
+                      </Text>
+                    </View>
+                    <View style={{flexDirection: 'row'}}>
+                      <Text
+                        style={{
+                          color: 'black',
+                          fontSize: 17,
+                          fontWeight: 'bold',
+                          left: 1.5,
+                        }}>
+                        Start Date :{' '}
+                      </Text>
+                      <Text style={{color: 'black', fontSize: 17, left: 4}}>
+                        {' '}
+                        {item.start_date}
+                      </Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            );
+          }
+          } />
+        <View style={{ backgroundColor: "lightblue", borderRadius: 200, width: 60,bottom:70,left:300 }}>
+          <Icon
+            name="add"
+            size={60}
+            color="black"
+
+            style={{ position: "relative" }}
+            onPress={() => navigation.navigate("CreateSurvey")}
+          /></View>
+      </View>
+    </SafeAreaView>
+  )
+}
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
+  FlatlistContainer: {
+    //backgroundColor: '#F0ECD5',
+    flexDirection: 'row',
+    margin: 7,
+    //flex:1,
+    borderRadius: 10,
+    backgroundColor: 'lightgrey'
+    //flexGrow:0
   },
-  item: {
-    padding: 16,
-    marginVertical: 8,
-    marginHorizontal: 16,
+
+  Text: {
+    fontSize: 15,
+    color: 'grey',
+
   },
-  title: {
-    
-    fontSize: 30,
-    top:20,
-    flexDirection: "column"
+
+  QRCode: {
+    marginLeft: 20,
   },
-  detail:{
-    fontSize:15,
-  }
-});
+
+  imageContainer: {
+    height: 70,
+    width: 77,
+    marginLeft: 10,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    //backgroundColor:'red',
+
+  },
+
+  infoContainer: {
+    marginLeft: 20,
+    // flexDirection:"row",
+    // width:200,
+    // alignItems: 'flex-start',
+    // justifyContent: "space-evenly",
+    // width: 180,
+    // //backgroundColor:'#F0ECD5',
+
+  },
+})
 
 
-export default ConductedSurveys
+

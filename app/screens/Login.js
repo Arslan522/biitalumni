@@ -9,27 +9,34 @@ import { Picker } from '@react-native-picker/picker';
 import { Item } from 'react-native-paper/lib/typescript/components/List/List';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { log } from 'react-native-reanimated';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function Login({ navigation }) {
 
-  const [type, setType] = useState('Admin');
+  const [type, setType] = useState('Alumni');
   const [Aridno, setAridno] = useState('2019-Arid-0078');
   const [pass, setPass] = useState('arslan');
   const [users, setUsers] = useState();
   const [hidePass, setHidePass] = useState(true);
-  console.log(global.aridno)
+  //console.log(global.aridno)
   global.aridno = Aridno;
+  // console.log(global.aridno)
+  // console.log("sfdfdfdfdfdfxgfdxhrdx",global.aridno)
+
   //console.log(global.aridno);
   async function loginUser() {
-
+    //await AsyncStorage.setItem("aridnum", json?.Aridno)
     let response = await fetch
       (global.apiurl +'student/Login?aridno=' + Aridno + '&password=' + pass + '&type=' + type)
     let json = await response.text();
     console.log(JSON.stringify(json))
     setUsers(json)
+    global.aridno=Aridno;
     global.aid=json;
-    console.log("json new...........", json);
+   // console.log("rafwsdefrgthjkm,xdvgnjmk",global.aid)
+
+    //console.log("json new...........", json);
     //global.aridnum=json.aridno
     if (json === "\"No Account Found\"") {
       alert("No Account Found. Try Again!")
