@@ -155,46 +155,44 @@ const Drawers = () => {
     console.log("this..........hgfhg.....", json)
   }
   return (
-   
-    <Drawer.Navigator initial='MainScreen'
-    backBehavior='initialRoute  ' defaultScreenOptions={MainScreen}>
+    <Drawer.Navigator initial="MainScreen">
       {/* scrollEnabled={false} */}
+
+      <Drawer.Screen
+        name="Main Page"
+        component={MainScreen}
+        options={{
+          drawerLabel: 'Timeline',
+          drawerIcon: ({focused, size}) => (
+            <Icon
+              name="contact-page"
+              size={25}
+              color={focused ? '#2196F3' : 'black'}
+            />
+          ),
+        }}
+      />
       <Drawer.Screen
         name="Profile"
         component={ProfileScreen}
         options={{
           drawerLabel: '',
           drawerIcon: () => (
-            data = { getProduct },
-            <Image style={{ backgroundColor: "black",marginBottom:60,left:70, height: 100, width: 100, borderRadius: 50 }}
-              source={{ uri: global.imageUrl + `${global.profileimage}` }} />
-              //<View><Text>{global.fname}</Text></View>
-          ),
-        }}
-      />
-      <Drawer.Screen
-        name="Sessionvise"
-        component={Sessionvise}
-        options={{
-          drawerLabel: 'Session Vise',
-          drawerIcon: ({ focused, size }) => (
-            <Icon
-              name="contact-page"
-              size={25}
-              color={focused ? '#2196F3' : 'black'} />
-          ),
-        }}
-      />
-            <Drawer.Screen
-        name="Main Page"
-        component={MainScreen}
-        options={{
-          drawerLabel: 'Timeline',
-          drawerIcon: ({ focused, size }) => (
-            <Icon
-              name="contact-page"
-              size={25}
-              color={focused ? '#2196F3' : 'black'} />
+            (data = {getProduct}),
+            (
+              <Image
+                style={{
+                  backgroundColor: 'black',
+                  marginBottom: 60,
+                  left: 70,
+                  height: 100,
+                  width: 100,
+                  borderRadius: 50,
+                }}
+                source={{uri: global.imageUrl + `${global.profileimage}`}}
+              />
+            )
+            //<View><Text>{global.fname}</Text></View>
           ),
         }}
       />
@@ -216,11 +214,12 @@ const Drawers = () => {
         component={Job}
         options={{
           drawerLabel: 'Job',
-          drawerIcon: ({ focused, size }) => (
+          drawerIcon: ({focused, size}) => (
             <Icon
               name="add-task"
               size={25}
-              color={focused ? '#2196F3' : 'black'} />
+              color={focused ? '#2196F3' : 'black'}
+            />
           ),
         }}
       />
@@ -229,11 +228,12 @@ const Drawers = () => {
         component={Search}
         options={{
           drawerLabel: 'Search Alumni',
-          drawerIcon: ({ focused, size }) => (
+          drawerIcon: ({focused, size}) => (
             <Icon
               name="search"
               size={25}
-              color={focused ? '#2196F3' : 'black'} />
+              color={focused ? '#2196F3' : 'black'}
+            />
           ),
         }}
       />
@@ -242,11 +242,12 @@ const Drawers = () => {
         component={ConductedSurveys}
         options={{
           drawerLabel: 'Surveys',
-          drawerIcon: ({ focused, size }) => (
+          drawerIcon: ({focused, size}) => (
             <Icon
               name="post-add"
               size={25}
-              color={focused ? '#2196F3' : 'black'} />
+              color={focused ? '#2196F3' : 'black'}
+            />
           ),
         }}
       />
@@ -255,13 +256,13 @@ const Drawers = () => {
         component={Dinner}
         options={{
           drawerLabel: 'Dinner',
-            drawerIcon: ({ focused, size }) => (
-              <Icon
-                name= "dinner-dining"
-              size = { 25 }
-              color = { focused? '#2196F3': 'black' } />
+          drawerIcon: ({focused, size}) => (
+            <Icon
+              name="dinner-dining"
+              size={25}
+              color={focused ? '#2196F3' : 'black'}
+            />
           ),
-          
         }}
       />
       {/* <Drawer.Screen
@@ -295,7 +296,6 @@ const Drawers = () => {
           ),
         }}
       /> */}
-
     </Drawer.Navigator>
   );
 }

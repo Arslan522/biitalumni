@@ -29,11 +29,14 @@ export default function Login({ navigation }) {
     //await AsyncStorage.setItem("aridnum", json?.Aridno)
     let response = await fetch
       (global.apiurl +'student/Login?aridno=' + Aridno + '&password=' + pass + '&type=' + type)
-    let json = await response.text();
+    let json = await response.json();
     console.log(JSON.stringify(json))
     setUsers(json)
     global.aridno=Aridno;
-    global.aid=json;
+    global.aid = json.allumnini_id;
+    // console.log("global.adid.....................",global.aid);
+    global.session=json.session;
+    // console.log(global.session);
    // console.log("rafwsdefrgthjkm,xdvgnjmk",global.aid)
 
     //console.log("json new...........", json);
@@ -232,3 +235,19 @@ const styles = StyleSheet.create({
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

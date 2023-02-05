@@ -127,6 +127,27 @@ const CreateSurvey = ({navigation}) => {
           disabled={true}
           onPress={() => setModalVisible1(true)}
         />
+        <View style={styles.centeredView}>
+          <Modal
+            animationType="fade"
+            transparent={true}
+            visible={modalVisible1}
+            onRequestClose={() => {
+              Alert.alert('Modal has been closed.');
+              setModalVisible1(!modalVisible1);
+            }}>
+            <View style={styles.centeredView}>
+              <DatePicker onSelectedChange={date => setstartdate(date)} />
+            </View>
+            <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => setModalVisible1(!modalVisible1)}>
+              <Button color="red" mode="outlined" style={{}}>
+                Confirm Date
+              </Button>
+            </Pressable>
+          </Modal>
+        </View>
         <Icon
           name="calendar-today"
           style={{left: 20, top: 0}}
@@ -157,52 +178,7 @@ const CreateSurvey = ({navigation}) => {
           size={35}
           onPress={() => setModalVisible(true)}></Icon>
       </View>
-      {/* <Icon 
-                name="update" size={100} onPress={() => {
-                //    <Calender/>
-                    {
-                        showCalendar &&
-                            <DatePicker
-
-                                onSelectedChange={date => setSelectedDate(date)}
-                            />
-                    }
-                
-
-
-
-                }}>
-                </Icon> */}
-      {/* {
-                    showCalendar &&
-                <DatePicker
-
-                    onSelectedChange={date => setSelectedDate(date)}
-                /> 
-                } */}
-
-      <View style={styles.centeredView}>
-        <Modal
-          animationType="fade"
-          transparent={true}
-          visible={modalVisible1}
-          onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-            setModalVisible1(!modalVisible1);
-          }}>
-          <View style={styles.centeredView}>
-            <DatePicker onSelectedChange={date => setstartdate(date)} />
-          </View>
-          <Pressable
-            style={[styles.button, styles.buttonClose]}
-            onPress={() => setModalVisible1(!modalVisible1)}>
-            <Button color="red" mode="outlined" style={{}}>
-              Confirm Date
-            </Button>
-          </Pressable>
-        </Modal>
-      </View>
-
+      
       <View style={styles.centeredView}>
         <Modal
           animationType="fade"

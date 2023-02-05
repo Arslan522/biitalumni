@@ -46,27 +46,22 @@ const NextScreen = item => {
 };
   ///global.shopPhone
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      
-      
-        <View
-          style={{
-            backgroundColor: '#fff',
-            borderColor: 'black',
-            paddingVertical: 10,
-            paddingHorizontal: 10,
-            elevation: 10,
-            borderTopLeftRadius: 15,
-            borderTopRightRadius: 15,
-            borderBottomLeftRadius: 15,
-            borderBottomRightRadius: 15,
-          }}>
-
-
+    <SafeAreaView style={{flex: 1}}>
+      <View
+        style={{
+          backgroundColor: '#fff',
+          borderColor: 'black',
+          paddingVertical: 10,
+          paddingHorizontal: 10,
+          elevation: 10,
+          borderTopLeftRadius: 15,
+          borderTopRightRadius: 15,
+          borderBottomLeftRadius: 15,
+          borderBottomRightRadius: 15,
+        }}>
         <FlatList
           data={Data}
-          renderItem={({ item }) => {
-           
+          renderItem={({item}) => {
             return (
               <View
                 style={{
@@ -121,20 +116,27 @@ const NextScreen = item => {
                 </TouchableOpacity>
               </View>
             );
-          }
-          } />
-        <View style={{ backgroundColor: "lightblue", borderRadius: 200, width: 60,bottom:70,left:300 }}>
+          }}
+        />
+        <View
+          style={{
+            backgroundColor: 'lightblue',
+            borderRadius: 200,
+            width: 60,
+            left: 300,
+            top: '190%',
+          }}>
           <Icon
             name="add"
             size={60}
             color="black"
-
-            style={{ position: "relative" }}
-            onPress={() => navigation.navigate("CreateSurvey")}
-          /></View>
+            style={{position: 'relative'}}
+            onPress={() => navigation.navigate('CreateSurvey')}
+          />
+        </View>
       </View>
     </SafeAreaView>
-  )
+  );
 }
 
 const styles = StyleSheet.create({

@@ -10,146 +10,214 @@ import { Alert } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import CreatePost from './CreatePost'
-import {Avatar, Button, Card} from 'react-native-paper';
+import {Avatar, Button, Card, IconButton} from 'react-native-paper';
 //import QRCode from 'react-native-qrcode-generator'
 
 export default function MainScreen({navigation}) {
-    const [postdescription, setPostDescription] = useState();
-    const [getProduct, setProduct] = useState()
-    const [Postdata, setPostdata] = useState()
-    const [imgsrc, setImagesrc] = useState(Image.resolveAssetSource(avatarImage).uri)
-    const [image, setImage] = useState({})
-    //console.log("get ..............", global.aridno);
-console.log();
+  const [postdescription, setPostDescription] = useState();
+  const [getProduct, setProduct] = useState();
+  const [Postdata, setPostdata] = useState();
+  const [imgsrc, setImagesrc] = useState(
+    Image.resolveAssetSource(avatarImage).uri,
+  );
+  const [image, setImage] = useState({});
+  const [count, setCount] = useState();
 
-    useEffect(() => {
-        timelineView()
-    }, [])
-    //console.log("Products shown here",getProduct)
-    //console.log(global.aid);
+  async function CountNotification() {
+    let response = await fetch(
+      global.apiurl +
+        'student/checkRequestCounter?session=' +
+        global.session,
+    );
+    let data = await response.json();
+    //console.log("Request....",JSON.stringify(data))
+    setCount(data);
+    console.log(data);
+    console.log(global.session);
+    // notify.red
+  }
 
-    const options = {
-        title: 'Select Image',
-        type: 'library',
-        options: {
-            maxHeight: 200,
-            maxWidth: 200,
-            selectionLimit: 1,
-            mediaType: 'photo',
-            includeBase64: false
-        }
+  useEffect(() => {
+    timelineView();
+    CountNotification();
+  }, []);
+  //console.log("Products shown here",getProduct)
+  //console.log(global.aid);
+
+  const options = {
+    title: 'Select Image',
+    type: 'library',
+    options: {
+      maxHeight: 200,
+      maxWidth: 200,
+      selectionLimit: 1,
+      mediaType: 'photo',
+      includeBase64: false,
+    },
+  };
+
+  const openGallery = async () => {
+    const result = await launchImageLibrary(options);
+    setImagesrc(result.assets[0].uri);
+    setImage(result.assets[0]);
+    console.log(result);
+  };
+  async function addpost() {
+    const data = new FormData();
+    data.append('PostPhoto', {
+      uri: image.uri,
+      type: image.type,
+      name: image.fileName,
+    });
+    let response = await fetch(
+      global.apiurl +
+        `student/addPosst?aid=${global.aid}&postdiscription=${postdescription}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-type': 'multipart/form-data',
+        },
+        body: data,
+      },
+    );
+    let json = await response.json();
+    // console.log({json});
+    setPostdata(json);
+    // console.log('Add Post pressed', json);
+    // console.log('Add Post pressed', global.aid);
+
+    if (json == 'Post Added') {
+      Alert.alert('Post', 'Added Successfully...');
+    } else {
+      alert('Unsuccessfull');
     }
+  }
+  async function timelineView() {
+    let response = await fetch(global.apiurl + 'student/TimeLine');
+    let json = await response.json();
+    // console.log(JSON.stringify(json));
+    setProduct(json);
+    // console.log("this..........hgfhg.....", json)
+  }
+  // console.log(global.aridno);
+  return (
+    <SafeAreaView style={{flex: 1}}>
+      <View style={{width:"6%",position:"absolute",left:"92%",top:6,borderRadius:20}}>
+      <Text style={{color:"green",alignSelf:"center",fontWeight:"bold"}}>{count}
+      </Text>
+      </View>
+      <View style={{flexDirection: 'row', padding: 5}}>
+        <Image
+          style={{
+            backgroundColor: 'black',
+            height: 50,
+            width: 50,
+            borderRadius: 50,
+          }}
+          source={{uri: global.imageUrl + `${global.profileimage}`}}
+        />
 
-    const openGallery = async () => {
-        const result = await launchImageLibrary(options)
-        setImagesrc(result.assets[0].uri)
-        setImage(
-            result.assets[0]
-        )
-        console.log(result)
-    }
-    async function addpost() {
-        const data = new FormData()
-        data.append('PostPhoto', { uri: image.uri, type: image.type, name: image.fileName })
-        let response = await fetch
-            (global.apiurl + `student/addPosst?aid=${global.aid}&postdiscription=${postdescription}`,
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-type': 'multipart/form-data'
-                    },
-                    body: data
-                })
-        let json = await response.json()
-        console.log({json})
-        setPostdata(json)
-        console.log("Add Post pressed", json);
-        console.log("Add Post pressed", global.aid);
-
-
-
-        if (json == "Post Added") {
-            Alert.alert("Post", "Added Successfully...")
-        }
-        else {
-            alert('Unsuccessfull')
-        }
-    }
-    async function timelineView() {
-        let response = await fetch
-            (global.apiurl + 'student/TimeLine')
-        let json = await response.json();
-        // console.log(JSON.stringify(json));
-        setProduct(json);
-        // console.log("this..........hgfhg.....", json)
-    }
-    console.log(global.aridno)
-    return (
-        <SafeAreaView style={{ flex: 1 }}>
-            <View style={{flexDirection:"row",padding:5}}>
-            <Image style={{ backgroundColor: "black", height: 50, width: 50, borderRadius: 50 }} 
-                    source={{ uri: global.imageUrl + `${global.profileimage}` }} />
-            
-                <TouchableOpacity 
+        <TouchableOpacity
+          style={{
+            borderRadius: 100,
+            paddingLeft: 20,
+            width: '73%',
+            marginLeft: 10,
+            backgroundColor: 'lightgrey',
+          }}
+          onPress={() => {
+            navigation.navigate('CreatePost');
+          }}>
+          <Text
+            style={{top: 12.5, right: 5, fontSize: 17}}
+            // onChangeText={setPostDescription}
+            // value={postdescription}
+          >
+            What's on your mind
+          </Text>
+        </TouchableOpacity>
+        <IconButton
+          style={{bottom: 3}}
+          icon="bell"
+          size={25}
+          onPress={() => {
+            navigation.navigate('SessionVise');
+          }}
+        />
+      </View>
+      <View>
+        <FlatList
+          style={{backgroundColor: 'darkgray'}}
+          data={getProduct}
+          scrollEnabled
+          renderItem={({item}) => {
+            // console.log('Flatlist items.......', item);
+            return (
+              <View style={styles.FlatlistContainer} key={item.key}>
+                <View style={{flexDirection: 'row', left: 5, top: 4}}>
+                  <Image
                     style={{
-                        borderRadius: 100, paddingLeft: 20,
-                        width: "80.5%", marginLeft: 10,backgroundColor:"lightgrey"
+                      backgroundColor: 'black',
+                      height: 50,
+                      width: 50,
+                      borderRadius: 50,
                     }}
-                onPress={() => { navigation.navigate('CreatePost') }}>
-    <Text
-        style={{top:12.5,right:5,fontSize:17}}
-        // onChangeText={setPostDescription}
-        // value={postdescription}
-        >What's on your mind
-    </Text>
-</TouchableOpacity>
+                    source={{uri: global.imageUrl + `${item.ProfileImg}`}}
+                  />
+                  <Text
+                    style={{
+                      color: 'black',
+                      fontSize: 18,
+                      top: 7,
+                      left: 7,
+                      fontWeight: 'bold',
+                    }}>
+                    {item.FirstName} {item.LastName}
+                  </Text>
+                </View>
 
-</View>
-            <View>
-                <FlatList
-                    style={{ backgroundColor: "darkgray" }}
-                    data={getProduct}
-                    
-                    scrollEnabled
-                    renderItem={({ item }) => {
-                        console.log("Flatlist items.......", item);
-                        return (
-                            <View style={styles.FlatlistContainer} key={item.key}>
-                                <View style={{ flexDirection: "row", left: 5, top: 4 }}>
-                                    <Image style={{ backgroundColor: "black", height: 50, width: 50, borderRadius: 50 }} source={{ uri: global.imageUrl + `${item.ProfileImg}` }} />
-                                    <Text style={{ color: 'black', fontSize: 18, top: 7, left: 7, fontWeight: "bold" }} >{item.FirstName} {item.LastName}</Text>
-                                </View>
-
-                                <View style={styles.infoContainer}>
-                                    <Text style={{ color: 'black', fontSize: 17, fontFamily: "bold", left: 9, top: 7.5 }} >{item.PostDis}</Text>
-                                </View>
-                                <View style={{
-                                    borderColor: "black",
-                                    borderTopWidth: 0.5,
-                                    top: 7,
-                                    paddingTop: 10,
-
-                                }}>
-                                    <Image style={{
-                                        backgroundColor: "black", height: 386,
-                                        width: 388, borderRadius: 10,
-                                        marginBottom: 15,
-                                        left: 2,
-                                        justifyContent: "center",
-                                        alignContent: "center",
-
-                                    }} source={{ uri: global.imageUrl + `${item.PostImg}` }} />
-                                </View>
-
-                            </View>)
-                    }
-                    } 
-                    //to get the latest post on top
-                    inverted/>
-                
-            </View>
-        </SafeAreaView>
-    )
+                <View style={styles.infoContainer}>
+                  <Text
+                    style={{
+                      color: 'black',
+                      fontSize: 17,
+                      fontFamily: 'bold',
+                      left: 9,
+                      top: 7.5,
+                    }}>
+                    {item.PostDis}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    borderColor: 'black',
+                    borderTopWidth: 0.5,
+                    top: 7,
+                    paddingTop: 10,
+                  }}>
+                  <Image
+                    style={{
+                      backgroundColor: 'black',
+                      height: 386,
+                      width: 388,
+                      borderRadius: 10,
+                      marginBottom: 15,
+                      left: 2,
+                      justifyContent: 'center',
+                      alignContent: 'center',
+                    }}
+                    source={{uri: global.imageUrl + `${item.PostImg}`}}
+                  />
+                </View>
+              </View>
+            );
+          }}
+          //to get the latest post on top
+          inverted
+        />
+      </View>
+    </SafeAreaView>
+  );
 }
 
 const styles = StyleSheet.create({

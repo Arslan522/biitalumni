@@ -1,4 +1,4 @@
-import { View } from 'react-native'
+import { Alert, View } from 'react-native'
 import React, { useState } from 'react'
 import RadioForm from 'react-native-simple-radio-button';
 import { Button } from 'react-native-paper';
@@ -14,13 +14,29 @@ const ShowSurvey = ({navigation,route}) => {
   const [quesion, setquestion] = useState();
   const [radiobtnval, setradiobtnval] = useState(-1);
   var radioprops = [
-    {label: 'Yes', value: 0},
-    {label: 'No', value: 1},
+    {label: 'Yes', value: 1},
+    {label: 'No', value: 0},
   ];
   useEffect(() => {
     surveyView();
     QuestionsView();
   }, []);
+  async function updateQues(idd,score) {
+    console.log('arslan')
+    let response = await fetch(
+      global.apiurl +
+        `student/updateQuestionByID?id=${idd}&answer=${score}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-type': 'multipart/form-data',
+        },
+      },
+    );
+    let json = await response.json();
+    console.log({json});
+   
+  }
   const {datasurvey} = route.params;
   console.log("data from prev screen..........", datasurvey);
 
@@ -41,6 +57,21 @@ const ShowSurvey = ({navigation,route}) => {
   const [studentdata, setstudentdata] = useState();
   const [evaluationData, setEvaluationData] = useState([]);
   const [FinalevaluationData, setFinalEvaluationData] = useState([]);
+
+async function saveEvaluation() {
+  let response = await fetch(global.apiurl + '/student/insertquestion ', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(FinalevaluationData),
+  });
+  let json = await response.json();
+  console.log(FinalevaluationData);
+  console.log(JSON.stringify(json));
+}
+
 
   const setArrayObj = data => {
     let arr = [];
@@ -180,7 +211,8 @@ const ShowSurvey = ({navigation,route}) => {
                   initial={radiobtnval}
                   buttonColor={'grey'}
                   onPress={val => {
-                    updateScore(item.qid, val, item.description);
+                updateQues(item.qid,val)
+                    //updateScore(item.qid, val, item.description);
                     // console.log("val........",val);
                     // console.log("item.qid.....",item.qid);;
                   }}
@@ -197,10 +229,16 @@ const ShowSurvey = ({navigation,route}) => {
         <Button
           mode="contained"
           icon="content-save"
-          color="navy"
+          // color="navy"
           labelStyle={{fontSize: 24, color: '#fff'}}
           onPress={() => {
-            StudentEvaluation();
+           Alert.alert('Survey','successfully Sumitted',
+           [
+            {
+              text:"OK",
+              onPress:(()=>{navigation.navigate("ConductedSurveys")})
+            }
+           ])
           }}>
           Save
         </Button>

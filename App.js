@@ -33,10 +33,11 @@ import SearchedprofileScreen from './app/screens/SearchedprofileScreen';
 import ShowSurvey from './app/screens/ShowSurvey';
 import DinnerPost from './app/screens/DinnerPost';
 import CreatePost from './app/screens/CreatePost';
+import Sessionvise from './app/screens/Sessionvise';
 //192.168.100.42 wifi
-//192.168.29.97 mobile
-global.apiurl = 'http://192.168.29.97/FypAlumni/api/';
-global.imageUrl = 'http://192.168.29.97/FypAlumni/Content/Image/';
+//192.168.227.97 mobile
+global.apiurl = 'http://192.168.100.42/FypAlumni/api/';
+global.imageUrl = 'http://192.168.100.42/FypAlumni/Content/Image/';
 const Stack = createStackNavigator();
 
 const App = () => {
@@ -75,6 +76,7 @@ const App = () => {
         <Stack.Screen name="DinnerPost" component={DinnerPost} />
         <Stack.Screen name="CreatePost" component={CreatePost} />
         <Stack.Screen name="Result" component={Result} />
+        <Stack.Screen name="SessionVise" component={Sessionvise} />
         <Stack.Screen name="Add Questions" component={AddQuestion} />
         <Stack.Screen name="ScreenOfSurveys" component={ScreenOfSurveys} />
         <Stack.Screen name="Endorcement" component={Endorcement} />

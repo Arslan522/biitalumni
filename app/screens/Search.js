@@ -24,7 +24,7 @@ const Search = ({navigation,props}) => {
 
     useEffect(() => {
         getalumni();
-        NextScreen();
+        // NextScreen();
     }, [])
 
     async function getalumni() {
@@ -54,10 +54,10 @@ const Search = ({navigation,props}) => {
         }
     };
 
-   const NextScreen = (item)=>{
-        console.log("new data is here.............",item);
-        navigation.navigate('SearchedprofileScreen', { newdataa: item })
-    }
+//    const NextScreen = (item)=>{
+//         console.log("new data is here.............",item);
+//         navigation.navigate('SearchedprofileScreen', { newdataa: item })
+//     }
 
 
     return (
@@ -70,6 +70,7 @@ const Search = ({navigation,props}) => {
             />
 
             <FlatList
+            style={{padding:10}}
                 data={query.length > 0 ? filterProduct :  product}
                 keyExtractor={(i) => i.id}
                 renderItem={({ item }) => {
@@ -79,8 +80,14 @@ const Search = ({navigation,props}) => {
                         <View style={styles.flatListcontainer}>
                             {/* {console.log(item)} */}
                             
-                            <TouchableOpacity onPress={() =>{NextScreen(item)}}>
-                            <Image style={{ height: 160, width: 130, borderRadius: 20, marginTop: 5 }}
+                            <TouchableOpacity 
+                            onPress={()=>{
+                                navigation.navigate('SearchedprofileScreen', {
+                                  newdataa: item, 
+                                });
+                            }}
+                            style={{flexDirection:"row"}}>
+                            <Image style={{ height: 100, width: 100, borderRadius: 60, marginTop:5 ,marginLeft:5 }}
                                  source={{ uri: global.imageUrl + `${item.image}` }} /> 
                             <Text style={styles.flatListtext}>Aridno :  {item.aridno}{'\n'}Name  :  {item.fname} {item.lname}{'\n'}Skill     :  {item.skills}{'\n'}
                             </Text>
@@ -124,7 +131,7 @@ const styles = StyleSheet.create({
     flatListtext: {
         paddingLeft: 15, 
         //marginTop:10, 
-        fontSize: 16,
+        fontSize: 14,
         color: 'black',
         //marginLeft:20,
         alignSelf: 'center',

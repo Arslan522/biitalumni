@@ -165,12 +165,7 @@ const CreateJob = ({ navigation }) => {
     const [company, setcompany] = useState();
     const [salary, setsalary] = useState();
 
-    global.aridno
-    console.log('create job page', global.aridno);
         async function saveUser() {
-            console.log('calling creating job...........',)
-            console.log('create job page', global.aridno);
-
             let response = await fetch
                 (global.apiurl + 'student/addjob',
                     {

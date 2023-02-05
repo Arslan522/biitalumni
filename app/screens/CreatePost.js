@@ -43,20 +43,12 @@ const CreatePost = () => {
   //var aid = global.aid;
 
   async function addpost() {
-    // user = {
-    //     aid: global.aid,
-    //     postdescription: postdescription,
-    // }
-    //console.log(user);
     const data = new FormData();
-    // data.append('name', 'hello')
     data.append('PostPhoto', {
       uri: image.uri,
       type: image.type,
       name: image.fileName,
     });
-    //console.log('calling addpost...........', global.apiurl, data)
-    //console.log(data);
     let response = await fetch(
       global.apiurl +
         `student/addPosst?aid=${global.aid}&postdiscription=${postdescription}`,

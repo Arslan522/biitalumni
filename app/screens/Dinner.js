@@ -9,12 +9,14 @@ import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import {launchImageLibrary} from 'react-native-image-picker';
 import {Alert} from 'react-native';
 import {TouchableOpacity} from 'react-native';
-import {FlatList} from 'react-native-gesture-handler';
+import {FlatList, ScrollView} from 'react-native-gesture-handler';
 import {StyleSheet} from 'react-native';
-import {Modal} from 'react-native-paper';
 import DatePicker from 'react-native-modern-datepicker';
-import {Pressable} from 'react-native';
 import {black} from 'react-native-paper/lib/typescript/styles/colors';
+import {Modal, Pressable} from 'react-native';
+import img from '../assets/dinner.jpg';
+import { Picker } from '@react-native-picker/picker';
+
 
 const Dinner = ({navigation}) => {
   const [postdescription, setPostDescription] = useState();
@@ -24,7 +26,14 @@ const Dinner = ({navigation}) => {
   const [image, setImage] = useState({});
   const [startdate, setstartdate] = useState();
   const [modalVisible1, setModalVisible1] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
+  const [year, setyear] = useState();
+  const [date, setdate] = useState();
+  const [title, settitle] = useState();
+    const [status, setStatus] = useState();
+
+  const [selectedDate, setSelectedDate] = useState();
+
+
 
   const LeftContent = props => <Avatar.Icon {...props} icon="folder" />;
   const calenderchang = () => {
@@ -52,139 +61,201 @@ const Dinner = ({navigation}) => {
 
   //var aid = global.aid;
 
-  async function addpost() {
-    // user = {
-    //     aid: global.aid,
-    //     postdescription: postdescription,
-    // }
-    //console.log(user);
-    const data = new FormData();
-    // data.append('name', 'hello')
-    data.append('PostPhoto', {
-      uri: image.uri,
-      type: image.type,
-      name: image.fileName,
-    });
-    //console.log('calling addpost...........', global.apiurl, data)
-    //console.log(data);
-    let response = await fetch(
-      global.apiurl +
-        `student/adminaddPosst?aid=${global.aid}&postdiscription=${postdescription}`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-type': 'multipart/form-data',
-        },
-        body: data,
-      },
-    );
-    let json = await response.json();
-    console.log(JSON.stringify(json));
-    setPostdata(json);
-    console.log('Add Post pressed', json);
+ async function addpost() {
+  console.log("dinner............................",date);
+   let response = await fetch(
+     global.apiurl +
+       `student/adminaddPosst?postdiscription=${postdescription}&title=${title}
+                &date=${startdate}&year=${year}&aid=${global.aid}&status='decline'`,
+     {
+       method: 'POST',
+       headers: {
+         Accept: 'application/json',
+         'Content-Type': 'application/json',
+       },
+       body: data,
+     },
+   );
+   let json = await response.json();
+   console.log(JSON.stringify(json));
+   setPostdata(json)
+   console.log(setPostdata);
+ }
 
-    if (json == 'Post Added') {
-      Alert.alert('Post', 'Added Successfully...');
-      navigation.navigate('Dinner');
-    } else {
-      alert('Unsuccessfull');
-    }
-  }
+
+
+
+
+
   return (
-    <View>
-      <View style />
-      <Text style={{color: 'black', fontSize: 18, left: 15, marginTop: 10}}>
-        Title for the survey
-      </Text>
-      <TextInput
-        style={{
-          height: 40,
-          width: 350,
-          left: 20,
-          paddingLeft: 10,
-          backgroundColor: 'lightgrey',
-        }}
-        placeholderTextColor={'grey'}
-        placeholder="Title.."
-        onChangeText={n => settitle(n)}></TextInput>
-      <Text style={{color: 'black', fontSize: 18, left: 15}}>Start Date</Text>
-      <View style={{flexDirection: 'row', width: 330}}>
-        <TextInput
-          style={{
-            height: 40,
-            width: 320,
-            left: 20,
-            paddingLeft: 10,
-            backgroundColor: 'lightgrey',
-          }}
-          placeholderTextColor={'grey'}
-          placeholder="Enter Date"
-          keyboardType="numeric"
-          value={startdate}
-          onChangeText={n => setstartdate(n)}
-          disabled={true}
-          onPress={() => setModalVisible1(true)}
-        />
-        <Icon
-          name="calendar-today"
-          style={{left: 20, top: 0}}
-          size={35}
-          onPress={() => setModalVisible1(true)}></Icon>
-      </View>
-
-      <View style={styles.centeredView}>
-        <Modal
-          animationType="fade"
-          transparent={true}
-          visible={modalVisible1}
-          onRequestClose={() => {
-            Alert.alert('Date not picked');
-            setModalVisible1(!modalVisible1);
-          }}>
-          <View style={styles.centeredView}>
-            <DatePicker onSelectedChange={date => setstartdate(date)} />
-          </View>
-          <Pressable onPress={() => setModalVisible1(!modalVisible1)}>
-            <Button color="red" mode="outlined" style={{}}>
-              Confirm Date
-            </Button>
-          </Pressable>
-        </Modal>
-      </View>
+    <ScrollView style={{}}>
       <Card>
         <Card.Content>
+          <Text
+            style={{
+              color: 'black',
+              fontSize: 30,
+              left: 150,
+              fontWeight: 'bold',
+            }}>
+            Dinner
+          </Text>
+          <View
+            style={{
+              borderWidth: 1,
+              borderBottomColor: 'black',
+              width: 100,
+              left: 145,
+              marginBottom: 5,
+              bottom: 4,
+            }}></View>
+          <Image source={img} style={{height: 320, width: 380}} />
+          <Text style={{color: 'black', fontSize: 16, left: 15, marginTop: 30}}>
+            Title for the survey
+          </Text>
           <TextInput
+            style={{
+              height: 40,
+              width: 350,
+              left: 20,
+              paddingLeft: 10,
+              backgroundColor: 'lightgrey',
+            }}
+            placeholderTextColor={'grey'}
+            placeholder="Title.."
+            onChangeText={n => settitle(n)}></TextInput>
+          <Text style={{color: 'black', fontSize: 16, left: 15}}>
+            Description
+          </Text>
+          <TextInput
+            style={{
+              height: 40,
+              width: 350,
+              left: 20,
+              paddingLeft: 10,
+              backgroundColor: 'lightgrey',
+            }}
             backgroundColor="lightgrey"
             onChangeText={setPostDescription}
             value={postdescription}
             placeholder="What's on your mind"
           />
-          <TouchableOpacity
-            onPress={() => {
-              openGallery();
+          <Text style={{color: 'black', fontSize: 16, left: 15}}>Year</Text>
+          <Picker
+            style={{
+              // width: 145,
+              // height: 40,
+              // padding: 10,
+              // right: 2,
+              // bottom: 21,
+              // width: 150,
+              // // marginLeft: 3,
+              // marginLeft: 22,
+              // // marginTop: 10,
+              // // marginBottom: 10,
+              // borderColor: 'grey',
+              // borderWidth: 1,
+              // borderRadius: 18,
+              // backgroundColor: '#F8F0E3',
+              // color: 'black',
+              // height: 40,
+              width: 350,
+              left: 20,
+              paddingLeft: 10,
+              backgroundColor: 'lightgrey',
+            }}
+            selectedValue={year}
+            onValueChange={Itemvalue => {
+              setyear(Itemvalue);
             }}>
-            <View
+            <Picker.Item label="1992" value="1992" />
+            <Picker.Item label="1993" value="1993" />
+            <Picker.Item label="1994" value="1994" />
+            <Picker.Item label="1995" value="1995" />
+            <Picker.Item label="1996" value="1996" />
+            <Picker.Item label="1997" value="1997" />
+            <Picker.Item label="1998" value="1998" />
+            <Picker.Item label="1999" value="1999" />
+            <Picker.Item label="2000" value="2000" />
+            <Picker.Item label="2001" value="2001" />
+            <Picker.Item label="2002" value="2002" />
+            <Picker.Item label="2003" value="2003" />
+            <Picker.Item label="2004" value="2004" />
+            <Picker.Item label="2005" value="2005" />
+            <Picker.Item label="2006" value="2006" />
+            <Picker.Item label="2007" value="2007" />
+            <Picker.Item label="2008" value="2008" />
+            <Picker.Item label="2009" value="2009" />
+            <Picker.Item label="2010" value="2010" />
+            <Picker.Item label="2011" value="2011" />
+            <Picker.Item label="2012" value="2012" />
+            <Picker.Item label="2013" value="2013" />
+            <Picker.Item label="2014" value="2014" />
+            <Picker.Item label="2015" value="2015" />
+            <Picker.Item label="2016" value="2016" />
+            <Picker.Item label="2017" value="2017" />
+            <Picker.Item label="2018" value="2018" />
+            <Picker.Item label="2019" value="2019" />
+            <Picker.Item label="2020" value="2020" />
+            <Picker.Item label="2021" value="2021" />
+            <Picker.Item label="2022" value="2022" />
+            <Picker.Item label="2023" value="2023" />
+          </Picker>
+
+          <Text style={{color: 'black', fontSize: 16, left: 15}}>
+            Start Date
+          </Text>
+          <View style={{flexDirection: 'row', width: 330}}>
+            <TextInput
               style={{
-                marginTop: 10,
-                borderRadius: 10,
-                height: 250,
-                width: '100%',
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: 'grey',
+                height: 40,
+                width: 320,
+                left: 20,
+                paddingLeft: 10,
+                backgroundColor: 'lightgrey',
+              }}
+              placeholderTextColor={'grey'}
+              placeholder="Enter Date"
+              keyboardType="numeric"
+              value={startdate}
+              onChangeText={n => setstartdate(n)}
+              disabled={true}
+              onPress={() => setModalVisible1(true)}
+            />
+            <Icon
+              name="calendar-today"
+              style={{left: 20, top: 0}}
+              size={35}
+              onPress={() => setModalVisible1(true)}></Icon>
+          </View>
+
+          <View style={styles.centeredView}>
+            <Modal
+              animationType="fade"
+              transparent={true}
+              visible={modalVisible1}
+              onRequestClose={() => {
+                Alert.alert('Date not picked');
+                setModalVisible1(!modalVisible1);
               }}>
-              <Icon name="image" size={30} style={{top: 120, right: 5}}></Icon>
-              <Image
-                source={{uri: imgsrc}}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  borderRadius: 10,
-                  marginBottom: 30,
-                }}
-              />
-            </View>
-          </TouchableOpacity>
+              <View style={styles.centeredView}>
+                <DatePicker onSelectedChange={date => setstartdate(date)} />
+              </View>
+              <Pressable style={{flexDirection: 'row'}}>
+                <Button
+                  onPress={() => navigation.navigate('MainPage')}
+                  mode="outlined">
+                  Cancel
+                </Button>
+                <Button
+                  onPress={() => setModalVisible1(!modalVisible1)}
+                  mode="contained"
+                  style={{}}>
+                  Confirm Date
+                </Button>
+              </Pressable>
+            </Modal>
+          </View>
         </Card.Content>
 
         <Card.Actions style={{justifyContent: 'flex-end', right: 10}}>
@@ -200,7 +271,7 @@ const Dinner = ({navigation}) => {
           </Button>
         </Card.Actions>
       </Card>
-    </View>
+    </ScrollView>
   );
 };
 const styles = StyleSheet.create({
@@ -215,7 +286,6 @@ const styles = StyleSheet.create({
   PickerView: {
     backgroundColor: 'lightgrey',
     margintop: 10,
-    // marginStart:40,
     height: 40,
     width: 350,
     left: 20,
@@ -223,7 +293,7 @@ const styles = StyleSheet.create({
   },
   bg: {
     justifyContent: 'center',
-    marginTop: 10,
+    // marginTop: 10,
     width: 100,
     marginBottom: 40,
     height: 100,

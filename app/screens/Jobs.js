@@ -8,6 +8,8 @@ import CreateJob from './CreateJob';
 import { Searchbar } from 'react-native-paper';
 import { SafeAreaView, StatusBar, TouchableOpacity } from "react-native";
 import SearchStudent from "./SearchStudent";
+import {IconButton, List, MD3Colors, Switch} from 'react-native-paper';
+
 import bgImage from '../assets/logoo.png';
 
 //import QRCode from 'react-native-qrcode-generator'
@@ -17,6 +19,8 @@ export default function Jobs({ navigation }) {
   const [query, setQuery] = useState('');
   const [product, setproduct] = useState([]);
   const [filterProduct, setfilterProduct] = useState([])
+  const [isSwitchOn, setIsSwitchOn] = useState();
+  const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
   // const [imgsrc, setImagesrc] = useState(Image.resolveAssetSource(avatarImage).uri)
   // const [image, setImage] = useState({})
 
@@ -56,49 +60,19 @@ export default function Jobs({ navigation }) {
   };
   ///global.shopPhone
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{flex: 1}}>
       <Searchbar
-        style={{borderRadius:50}}
-        onChangeText={(e) => onChangeSearch(e)}
+        style={{borderRadius: 50}}
+        onChangeText={e => onChangeSearch(e)}
         value={query}
-        // onChange={(e)=>onChangeSearch(e)}  
+        // onChange={(e)=>onChangeSearch(e)}
         placeholder="Search by name/skills.."
       />
 
-      {/* <View
+      <View
         style={{
-          borderWidth: 1,
-          backgroundColor: "#2196F3",
-          borderRadius: 30,
-          width: 100,
-          height: 50,
-          left: 250,
-          bottom: -6,
+          padding: 5,
         }}>
-        <Icon
-          name="add-circle-outline"
-          size={30}
-          color="#FFFF90"
-          onPress={() => {
-            navigation.navigate("CreateJob")
-
-          }}
-          style={{ textAlign: "right", right: 33, top: 2 }}>
-        </Icon>
-        <Text
-          style={{
-            color: "white",
-            fontWeight: "bold",
-            textAlign: "center",
-            bottom: 1
-          }}>
-          Create Job</Text> 
-      </View>*/}
-
-      <View style={{
-        padding: 5,
-      }}>
-        
         <View
           style={{
             backgroundColor: '#fff',
@@ -111,61 +85,99 @@ export default function Jobs({ navigation }) {
             borderBottomLeftRadius: 15,
             borderBottomRightRadius: 15,
           }}>
-          
-        <FlatList
-          data={query.length > 0 ? filterProduct : product}
-          keyExtractor={(i) => i.id}
-          renderItem={({ item }) => {
-            console.log(item);
-            
-            return (
+          <Text style={{fontSize:20,color:"grey",fontWeight:"700"}}>
+            <Switch value={isSwitchOn} onValueChange={onToggleSwitch} />
+            Jobs
+          </Text>
+          <FlatList
+            data={query.length > 0 ? filterProduct : product}
+            keyExtractor={i => i.id}
+            renderItem={({item}) => {
+              // console.log(item);
 
-              <View style={{
-                borderColor: 'black',
-                paddingVertical: 10,
-                paddingHorizontal: 10,
-                elevation: 10,
-                borderTopLeftRadius: 15,
-                borderTopRightRadius: 15,
-                borderBottomLeftRadius: 15,
-                borderBottomRightRadius: 15,
-                flexDirection: 'row',
-                margin: 7,
-                backgroundColor: 'lightgrey'
-}} key={item.key}>
-                
-                <View style={styles.infoContainer}>
-                  <View style={{ flexDirection: "row" }}>
-                    <Text style={{ color: 'black', fontSize: 18, fontWeight: "bold" }} >Title         : </Text>
-                    <Text style={{ color: 'black', fontSize: 17 }}>{item.job_title}</Text>
+              return (
+                <SafeAreaView>
+                  <View
+                    style={{
+                      borderColor: 'black',
+                      paddingVertical: 10,
+                      paddingHorizontal: 10,
+                      elevation: 10,
+                      borderTopLeftRadius: 15,
+                      borderTopRightRadius: 15,
+                      borderBottomLeftRadius: 15,
+                      borderBottomRightRadius: 15,
+                      flexDirection: 'row',
+                      margin: 7,
+                      backgroundColor: 'lightgrey',
+                    }}
+                    key={item.key}>
+                    <View style={styles.infoContainer}>
+                      <View style={{flexDirection: 'row'}}>
+                        <Text
+                          style={{
+                            color: 'black',
+                            fontSize: 18,
+                            fontWeight: 'bold',
+                          }}>
+                          Title :{' '}
+                        </Text>
+                        <Text style={{color: 'black', fontSize: 17}}>
+                          {item.job_title}
+                        </Text>
+                      </View>
+                      <View style={{flexDirection: 'row'}}>
+                        <Text
+                          style={{
+                            color: 'black',
+                            fontSize: 17,
+                            fontWeight: 'bold',
+                          }}>
+                          Company :{' '}
+                        </Text>
+                        <Text style={{color: 'black', fontSize: 17}}>
+                          {item.company}
+                        </Text>
+                      </View>
+                      <View style={{flexDirection: 'row'}}>
+                        <Text
+                          style={{
+                            color: 'black',
+                            fontSize: 17,
+                            fontWeight: 'bold',
+                            right: -0.7,
+                          }}>
+                          City :{' '}
+                        </Text>
+                        <Text style={{color: 'black', fontSize: 17}}>
+                          {item.city}
+                        </Text>
+                      </View>
+                    </View>
                   </View>
-                  <View style={{ flexDirection: "row" }}>
-                    <Text style={{ color: 'black', fontSize: 17, fontWeight: "bold" }}>Company : </Text>
-                    <Text style={{ color: 'black', fontSize: 17 }}>{item.company}</Text>
-                  </View>
-                  <View style={{ flexDirection: "row" }}>
-
-                    <Text style={{ color: 'black', fontSize: 17, fontWeight: "bold", right: -0.7 }}>City           : </Text>
-                    <Text style={{ color: 'black', fontSize: 17 }}>{item.city}</Text>
-                  </View>
-                </View>
-              </View>
-            )
-          }
-          } />
-          <View style={{ backgroundColor: "lightblue", borderRadius: 200, width: 60, bottom: 70, left: 300 }}>
+                </SafeAreaView>
+              );
+            }}
+          />
+          <View
+            style={{
+              backgroundColor: 'lightblue',
+              borderRadius: 200,
+              width: 60,
+              left: 300,
+            }}>
             <Icon
               name="add"
-              size={60}
+              size={20}
               color="black"
-
-              style={{ position: "relative" }}
-              onPress={() => navigation.navigate("CreateJob")}
-            /></View>
+              style={{position: 'relative'}}
+              onPress={() => navigation.navigate('CreateJob')}
+            />
           </View>
+        </View>
       </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({

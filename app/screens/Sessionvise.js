@@ -3,38 +3,43 @@ import React from 'react';
 import {useState} from 'react';
 import {Image} from 'react-native';
 import {useEffect} from 'react';
-import {IconButton, List, MD3Colors} from 'react-native-paper';
+import {IconButton, List, MD3Colors,Switch} from 'react-native-paper';
 import {FlatList} from 'react-native-gesture-handler';
 import {SafeAreaView} from 'react-native';
 import {TouchableOpacity} from 'react-native';
-
 import {StyleSheet} from 'react-native';
 import {color} from 'react-native-reanimated';
+
 const Sessionvise = ({navigation}) => {
   const [postdescription, setPostDescription] = useState();
   const [getProduct, setProduct] = useState();
   const [Postdata, setPostdata] = useState();
   const [imgsrc, setImagesrc] = useState();
   const [image, setImage] = useState({});
+  const [count, setCount] = useState();
+ const [isSwitchOn, setIsSwitchOn] = useState();
+
+  const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
 
   useEffect(() => {
     timelineView();
   }, []);
   async function timelineView() {
-    let response = await fetch(global.apiurl + 'student/showNotification');
+    console.log(global.session);
+    let response = await fetch(global.apiurl + 'student/showNotification?session='+global.session);
     let json = await response.json();
     console.log(JSON.stringify(json));
     setProduct(json);
   }
   return (
-    <SafeAreaView style={{backgroundColor: 'lightgrey', marginTop: 20}}>
+    <SafeAreaView style={{backgroundColor: 'lightgrey', marginTop: 20}}> 
+      
       <View style={{flexDirection: 'row'}}>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={{
             borderRadius: 100,
             paddingLeft: 20,
             width: '55%',
-
             marginLeft: 10,
             backgroundColor: 'lightgrey',
           }}
@@ -47,10 +52,8 @@ const Sessionvise = ({navigation}) => {
               Create post
             </Text>
           </View>
-          {/* <Text style={{top: 0, right: 0,height:30, fontSize: 17}}>
-            What's on your mind
-          </Text> */}
-        </TouchableOpacity>
+         
+        </TouchableOpacity> */}
       </View>
       <FlatList
         style={{
@@ -67,61 +70,6 @@ const Sessionvise = ({navigation}) => {
                 description={item.date}
                 left={props => <List.Icon {...props} icon="post-outline" />}
               />
-              {/* <Text
-                style={{
-                  color: 'black',
-                  fontSize: 18,
-                  top: 7,
-                  left: 8,
-                  fontWeight: 'bold',
-                }}>
-                {item.description}
-              </Text>
-
-              <Text
-                style={{
-                  color: 'black',
-                  fontSize: 17,
-                  fontFamily: 'bold',
-                  left: 10,
-                  top: 7.5,
-                }}>
-                {item.date}
-              </Text>
-              <View
-                style={{
-                  borderColor: 'black',
-                  borderTopWidth: 0.5,
-                  top: 7,
-                  paddingTop: 10,
-                }}>
-                <Image
-                  style={{
-                    backgroundColor: 'black',
-                    height: 387,
-                    width: 386,
-                    // borderBottomLeftRadius:20,
-                    borderRadius: 10,
-                    marginBottom: 15,
-                    left: 2,
-                    justifyContent: 'center',
-                    alignContent: 'center',
-                  }}
-                  source={{
-                    uri: global.imageUrl + `${item.PostImg}`,
-                  }}
-                />
-                <View
-                  style={{
-                    backgroundColor: 'grey',
-                    borderWidth: 5,
-                    bottom:10,
-                    borderColor: 'grey',
-                    // right:30,
-                    width: '100%',
-                    borderRadius: 20,
-                  }}></View>
-              </View> */}
             </View>
           );
         }}
