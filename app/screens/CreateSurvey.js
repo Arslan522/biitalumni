@@ -90,6 +90,7 @@ const CreateSurvey = ({navigation}) => {
     } else {
       Alert.alert('Survey', 'Not added ');
     }
+
   }
 
   return (

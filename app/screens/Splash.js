@@ -40,9 +40,9 @@ useEffect(() => {
         <View style={styles.container}>
           <Image source={bgImage} style={styles.image} />
           <Text style={{fontSize:32,color:"black",fontWeight:"bold",fontStyle:"italic"}}>
-            BIIT</Text>
+            Admin</Text>
             <Text style={{fontSize:30,color:"black",fontWeight:"bold",fontStyle:"italic"}}>
-            Alumni
+            Side
           </Text>
         </View>
       )

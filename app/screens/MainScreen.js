@@ -102,11 +102,11 @@ export default function MainScreen({navigation}) {
   // console.log(global.aridno);
   return (
     <SafeAreaView style={{flex: 1}}>
-      <View style={{width:"6%",position:"absolute",left:"92%",top:6,borderRadius:20}}>
+      <View style={{width:"6%",position:"absolute",left:"92.5%",top:10,borderRadius:20}}>
       <Text style={{color:"green",alignSelf:"center",fontWeight:"bold"}}>{count}
       </Text>
       </View>
-      <View style={{flexDirection: 'row', padding: 5}}>
+      <View style={{flexDirection: 'row', padding: 10}}>
         <Image
           style={{
             backgroundColor: 'black',
@@ -154,7 +154,7 @@ export default function MainScreen({navigation}) {
             // console.log('Flatlist items.......', item);
             return (
               <View style={styles.FlatlistContainer} key={item.key}>
-                <View style={{flexDirection: 'row', left: 5, top: 4}}>
+                <View style={{flexDirection: 'row', left: 2, top: 4}}>
                   <Image
                     style={{
                       backgroundColor: 'black',
@@ -199,10 +199,10 @@ export default function MainScreen({navigation}) {
                     style={{
                       backgroundColor: 'black',
                       height: 386,
-                      width: 388,
+                      width: 372,
                       borderRadius: 10,
                       marginBottom: 15,
-                      left: 2,
+                      left: 0,
                       justifyContent: 'center',
                       alignContent: 'center',
                     }}

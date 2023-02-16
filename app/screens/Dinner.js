@@ -66,7 +66,7 @@ const Dinner = ({navigation}) => {
    let response = await fetch(
      global.apiurl +
        `student/adminaddPosst?postdiscription=${postdescription}&title=${title}
-                &date=${startdate}&year=${year}&aid=${global.aid}&status='decline'`,
+                &date=${startdate}&year=${year}&aid=${global.aid}&status= ${0}`,
      {
        method: 'POST',
        headers: {
@@ -109,29 +109,29 @@ const Dinner = ({navigation}) => {
               marginBottom: 5,
               bottom: 4,
             }}></View>
-          <Image source={img} style={{height: 320, width: 380}} />
-          <Text style={{color: 'black', fontSize: 16, left: 15, marginTop: 30}}>
-            Title for the survey
+          <Image source={img} style={{height: 320, width: 360}} />
+          <Text style={{color: 'black', fontSize: 16, left: 5, marginTop: 30}}>
+            Title 
           </Text>
           <TextInput
             style={{
               height: 40,
               width: 350,
-              left: 20,
+              left: 5,
               paddingLeft: 10,
               backgroundColor: 'lightgrey',
             }}
             placeholderTextColor={'grey'}
             placeholder="Title.."
             onChangeText={n => settitle(n)}></TextInput>
-          <Text style={{color: 'black', fontSize: 16, left: 15}}>
+          <Text style={{color: 'black', fontSize: 16, left: 8}}>
             Description
           </Text>
           <TextInput
             style={{
               height: 40,
               width: 350,
-              left: 20,
+              left: 5,
               paddingLeft: 10,
               backgroundColor: 'lightgrey',
             }}
@@ -140,27 +140,11 @@ const Dinner = ({navigation}) => {
             value={postdescription}
             placeholder="What's on your mind"
           />
-          <Text style={{color: 'black', fontSize: 16, left: 15}}>Year</Text>
+          <Text style={{color: 'black', fontSize: 16, left: 10}}>Year</Text>
           <Picker
             style={{
-              // width: 145,
-              // height: 40,
-              // padding: 10,
-              // right: 2,
-              // bottom: 21,
-              // width: 150,
-              // // marginLeft: 3,
-              // marginLeft: 22,
-              // // marginTop: 10,
-              // // marginBottom: 10,
-              // borderColor: 'grey',
-              // borderWidth: 1,
-              // borderRadius: 18,
-              // backgroundColor: '#F8F0E3',
-              // color: 'black',
-              // height: 40,
               width: 350,
-              left: 20,
+              left: 5,
               paddingLeft: 10,
               backgroundColor: 'lightgrey',
             }}
@@ -202,7 +186,7 @@ const Dinner = ({navigation}) => {
             <Picker.Item label="2023" value="2023" />
           </Picker>
 
-          <Text style={{color: 'black', fontSize: 16, left: 15}}>
+          <Text style={{color: 'black', fontSize: 16, left: 10}}>
             Start Date
           </Text>
           <View style={{flexDirection: 'row', width: 330}}>
@@ -210,7 +194,7 @@ const Dinner = ({navigation}) => {
               style={{
                 height: 40,
                 width: 320,
-                left: 20,
+                left: 5,
                 paddingLeft: 10,
                 backgroundColor: 'lightgrey',
               }}
@@ -224,7 +208,7 @@ const Dinner = ({navigation}) => {
             />
             <Icon
               name="calendar-today"
-              style={{left: 20, top: 0}}
+              style={{left: 5, top: 0}}
               size={35}
               onPress={() => setModalVisible1(true)}></Icon>
           </View>
@@ -259,9 +243,7 @@ const Dinner = ({navigation}) => {
         </Card.Content>
 
         <Card.Actions style={{justifyContent: 'flex-end', right: 10}}>
-          <Button onPress={() => navigation.navigate('MainScreen')}>
-            Cancel
-          </Button>
+          
           <Button
             mode="contained"
             onPress={() => {

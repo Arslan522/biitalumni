@@ -108,7 +108,7 @@ export default function Signup({ navigation }) {
           <View style={{ margintop: 10, left: 5, justifyContent: 'center', alignItems: 'center' }}>
             <Button 
               mode="contained"
-            color='red' onPress={openGallery}  style={{bottom:15,width:155}} >select profile</Button>
+             onPress={openGallery}  style={{bottom:15,width:155}} >select profile</Button>
           </View>
           <Text style={styles.simpletext}>
             Name

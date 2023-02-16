@@ -13,7 +13,7 @@ import { Alert } from 'react-native';
 
 
 
-const CreatePost = () => {
+const CreatePost = ({navigation}) => {
   const [postdescription, setPostDescription] = useState();
   const [getProduct, setProduct] = useState();
   const [Postdata, setPostdata] = useState();

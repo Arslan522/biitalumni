@@ -137,12 +137,10 @@ export default function SearchedprofileScreen({navigation, route}) {
 
         <View style={{height: 140, width: 400, left: 5, bottom: 100}}>
           <Text style={{fontSize: 22, left: 5, color: 'black'}}>
-            <Icon name="edit" size={20} />
           </Text>
           <Text style={{fontSize: 15, left: 10}}>
-            My name is Arsalan jamal.I am from Rawalpindi,{'\n'}Pakistan i am
-            WordPress Developer and also have experience in react native. My
-            experties are: {'\n'}
+            I am from Rawalpindi,Pakistan{'\n'} i am WordPress Developer and
+            also have experience in react native. My experties are: {'\n'}
             1. React native{'\n'}
             2. Android
           </Text>
@@ -159,19 +157,13 @@ export default function SearchedprofileScreen({navigation, route}) {
           }}>
           <Text style={{fontSize: 22, left: 5, color: 'black'}}>
             Education
-            <Icon name="edit" size={20} />
           </Text>
 
           <FlatList
             data={education}
-            // extraData = {query}
-            // numColumns='1'
             renderItem={({item}) => {
               return (
                 <View style={styles.flatListcontainer}>
-                  {/* {console.log(item)} */}
-                  {/* <Image style={{ height: 160, width: 130, borderRadius: 20, marginTop: 5 }}
-                  source={{ uri: global.imageUrl + `${item.image}` }} /> */}
                   <Text style={styles.flatListtext}>
                     University :- {item.uni_name}
                     {'\n'}Degree :- {item.uni_degree}
@@ -183,14 +175,6 @@ export default function SearchedprofileScreen({navigation, route}) {
               );
             }}
           />
-          {/* <Text style={{ fontSize: 15, left: 10 }}>
-           University: BIIT
-          </Text>
-          <Text style={{ fontSize: 15, left: 10 }}>
-           Degree: BSCS      </Text>
-          <Text style={{ fontSize: 15, left: 10 }}>
-            From : sep-2019 {'\n'}To : Present
-          </Text> */}
         </View>
 
         <View
@@ -205,18 +189,12 @@ export default function SearchedprofileScreen({navigation, route}) {
           }}>
           <Text style={{fontSize: 22, left: 5, color: 'black'}}>
             Experience
-            <Icon name="edit" size={20} />
           </Text>
           <FlatList
             data={exp}
-            // extraData = {query}
-            // numColumns='1'
             renderItem={({item}) => {
               return (
                 <View style={styles.flatListcontainer}>
-                  {/* {console.log(item)} */}
-                  {/* <Image style={{ height: 160, width: 130, borderRadius: 20, marginTop: 5 }}
-                  source={{ uri: global.imageUrl + `${item.image}` }} /> */}
                   <Text style={styles.flatListtext}>
                     Skill :- {item.skill}
                     {'\n'}Company :- {item.Company}
@@ -228,15 +206,6 @@ export default function SearchedprofileScreen({navigation, route}) {
               );
             }}
           />
-          {/* <Text style={{ fontSize: 15, left: 10 }}>
-            Skill : React Developer
-          </Text>
-          <Text style={{ fontSize: 15, left: 10 }}>
-            Company : Global Software House
-          </Text>
-          <Text style={{ fontSize: 15, left: 10 }}>
-            From:2019 To:2022
-          </Text> */}
         </View>
         <View
           style={{
@@ -250,7 +219,6 @@ export default function SearchedprofileScreen({navigation, route}) {
           }}>
           <Text style={{fontSize: 22, left: 5, color: 'black'}}>
             Skills
-            <Icon name="edit" size={20} />
           </Text>
           <FlatList
             data={Data}
@@ -272,31 +240,12 @@ export default function SearchedprofileScreen({navigation, route}) {
                         >{buttonText}
                       </Button>
                     </View>
-                    {/* <View style={{flexDirection: 'row', left: 180, bottom: 15}}>
-                      <RadioButton
-                        value="first"
-                        status={checked1 === 'first' ? 'checked' : 'unchecked'}
-                        onPress={() => setChecked1('first')}
-                      />
-                      <Text style={{top: 26, right: 25, color: 'black'}}>
-                        No
-                      </Text>
-                      <RadioButton
-                        value="second"
-                        status={checked1 === 'second' ? 'checked' : 'unchecked'}
-                        onPress={() => setChecked1('second')}
-                      />
-                      <Text style={{top: 26, right: 28, color: 'black'}}>
-                        Yes
-                      </Text>
-                    </View> */}
                   </View>
                 </View>
               );
             }}
           />
         </View>
-       
       </View>
     </ScrollView>
   );

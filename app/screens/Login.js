@@ -34,19 +34,21 @@ export default function Login({ navigation }) {
     setUsers(json)
     global.aridno=Aridno;
     global.aid = json.allumnini_id;
-    // console.log("global.adid.....................",global.aid);
+    global.status = json.JobStatus;
     global.session=json.session;
-    // console.log(global.session);
-   // console.log("rafwsdefrgthjkm,xdvgnjmk",global.aid)
 
-    //console.log("json new...........", json);
-    //global.aridnum=json.aridno
-    if (json === "\"No Account Found\"") {
+    if (json === "No Account Found") {
       alert("No Account Found. Try Again!")
     }
-    else {
+    else if (type=="Alumni") {
       navigation.navigate('Drawer')
-    }
+    } 
+    else if (type == 'Admin') {
+      navigation.navigate('Drawerone');
+    } 
+    // else {
+    //   alert('No Account Found. Try Again!');
+    // }
   }
 
   return (

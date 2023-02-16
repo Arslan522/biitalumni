@@ -35,25 +35,6 @@ const Sessionvise = ({navigation}) => {
     <SafeAreaView style={{backgroundColor: 'lightgrey', marginTop: 20}}> 
       
       <View style={{flexDirection: 'row'}}>
-        {/* <TouchableOpacity
-          style={{
-            borderRadius: 100,
-            paddingLeft: 20,
-            width: '55%',
-            marginLeft: 10,
-            backgroundColor: 'lightgrey',
-          }}
-          onPress={() => {
-            navigation.navigate('CreatePost');
-          }}>
-          <View style={{flexDirection: 'row'}}>
-            <IconButton icon="camera" size={40} />
-            <Text style={{fontSize: 20, top: 18, color: 'black'}}>
-              Create post
-            </Text>
-          </View>
-         
-        </TouchableOpacity> */}
       </View>
       <FlatList
         style={{

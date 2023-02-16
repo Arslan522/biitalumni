@@ -20,7 +20,21 @@ const ShowSurvey = ({navigation,route}) => {
   useEffect(() => {
     surveyView();
     QuestionsView();
-  }, []);
+  }, []);async function updateyesno(idd,score) {
+    console.log('Yes no...................',idd)
+    let response = await fetch(
+      global.apiurl + `student/updateQuestionByIDnew?id=${idd}&ans=${score}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-type': 'multipart/form-data',
+        },
+      },
+    );
+    let json = await response.json();
+    console.log({json});
+   
+  }
   async function updateQues(idd,score) {
     console.log('arslan')
     let response = await fetch(
@@ -212,6 +226,7 @@ async function saveEvaluation() {
                   buttonColor={'grey'}
                   onPress={val => {
                 updateQues(item.qid,val)
+                updateyesno(item.qid, val);
                     //updateScore(item.qid, val, item.description);
                     // console.log("val........",val);
                     // console.log("item.qid.....",item.qid);;

@@ -92,12 +92,10 @@ global.profileimage = json[0].image;
 
         <View style={{height: 140, width: 400, left: 5, bottom: 100}}>
           <Text style={{fontSize: 22, left: 5, color: 'black'}}>
-            <Icon name="edit" size={20} />
           </Text>
           <Text style={{fontSize: 15, left: 10}}>
-            My name is Arsalan jamal.I am from Rawalpindi,{'\n'}Pakistan i am
-            WordPress Developer and also have experience in react native. My
-            experties are: {'\n'}
+            I am from Rawalpindi,Pakistan.{'\n'}I am WordPress Developer and
+            also have experience in react native. My experties are: {'\n'}
             1. React native{'\n'}
             2. Android
           </Text>
@@ -106,7 +104,7 @@ global.profileimage = json[0].image;
         <View
           style={{
             height: 120,
-            width: 400,
+            width: 382,
             borderWidth: 1,
             borderColor: 'black',
             left: 5,
@@ -114,7 +112,6 @@ global.profileimage = json[0].image;
           }}>
           <Text style={{fontSize: 22, left: 5, color: 'black'}}>
             Education
-            <Icon name="edit" size={20} />
           </Text>
 
           <FlatList
@@ -138,13 +135,12 @@ global.profileimage = json[0].image;
               );
             }}
           />
-
         </View>
 
         <View
           style={{
             height: 120,
-            width: 400,
+            width: 382,
             borderWidth: 1,
             borderColor: 'black',
             left: 5,
@@ -153,7 +149,6 @@ global.profileimage = json[0].image;
           }}>
           <Text style={{fontSize: 22, left: 5, color: 'black'}}>
             Experience
-            <Icon name="edit" size={20} />
           </Text>
           <FlatList
             data={exp}
@@ -177,7 +172,7 @@ global.profileimage = json[0].image;
         <View
           style={{
             height: 70,
-            width: 400,
+            width: 382,
             borderWidth: 1,
             borderColor: 'black',
             left: 5,
@@ -186,7 +181,6 @@ global.profileimage = json[0].image;
           }}>
           <Text style={{fontSize: 22, left: 5, color: 'black'}}>
             Skills
-            <Icon name="edit" size={20} />
           </Text>
           <FlatList
             data={Data}

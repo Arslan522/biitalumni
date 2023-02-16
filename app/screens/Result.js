@@ -1,260 +1,184 @@
-import { View, Text ,StyleSheet, SafeAreaView} from 'react-native'
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  Image,
+  ScrollView,
+} from 'react-native';
 import React from 'react';
-import Pie from 'react-native-pie';
-import { Font } from 'react-native-paper/lib/typescript/types';
-import { ScrollView } from 'react-native-gesture-handler';
+import {useState, useEffect} from 'react';
+import {parse} from '@babel/core';
+import avatarImage from '../assets/logo.png';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import CreateJob from './CreateJob';
+import {Searchbar} from 'react-native-paper';
+import {SafeAreaView, StatusBar, TouchableOpacity} from 'react-native';
+import SearchStudent from './SearchStudent';
+import bgImage from '../assets/logoo.png';
 
-const Result = ({navigation}) => {
+//import QRCode from 'react-native-qrcode-generator'
+
+export default function Result({navigation, props}) {
+  const [Data, setData] = useState([]);
+  const [query, setQuery] = useState('');
+  const [product, setproduct] = useState([]);
+  const [filterProduct, setfilterProduct] = useState([]);
+  // const [imgsrc, setImagesrc] = useState(Image.resolveAssetSource(avatarImage).uri)
+  // const [image, setImage] = useState({})
+
+  useEffect(() => {
+    ViewSurveys();
+  }, []);
+  //console.log("Products shown here",getProduct)
+
+  async function ViewSurveys() {
+    //  let id = await AsyncStorage.getItem("userId")
+    let response = await fetch(global.apiurl + 'student/getsurvey');
+
+    let json = await response.json();
+    console.log('survey listt/..........', json);
+    setData(json);
+
+    //console.log("this wil  show profile...............",global.apiurl +'student/getalumni',json)
+  }
+  console.log(global.aridno);
+  const NextScreen = item => {
+    console.log('new data is here from survey page.............', item);
+    navigation.navigate('ReasultShow', {surveyresult: item});
+  };
+  ///global.shopPhone
   return (
-      <ScrollView>
-        <View style={{top:40}}>
-        <Text style={{fontSize:28,textAlign:"center",color:"black"}}>
-        ReactNative
-        </Text>
-        <Text style={{fontSize:24,textAlign:"left",color:"black",left:10}}>
-            Question # 1:-
-        </Text>
-        <Text style={{fontSize:16,textAlign:"left",color:"black",left:14}}>
-        Is React Native worth it in 2022
-        </Text>
-    </View>
-    <View style={{ flexDirection: "row",top:60,left:30 }}>
-        <View style={{
-          height: 20,
-          width: 100,
-          backgroundColor: '#C70000',
-          position: 'absolute',
-          top: 24,
-          left: 175,
+    <SafeAreaView style={{flex: 1}}>
+      <View
+        style={{
+          backgroundColor: '#fff',
+          borderColor: 'black',
+          paddingVertical: 10,
+          paddingHorizontal: 10,
+          elevation: 10,
+          borderTopLeftRadius: 15,
+          borderTopRightRadius: 15,
+          borderBottomLeftRadius: 15,
+          borderBottomRightRadius: 15,
         }}>
-          <Text style={{ left: 10, fontWeight: "bold" }}>
-            NO
-          </Text>
-        </View>
-
-        
-        <View style={{
-          height: 20,
-          width: 100,
-          backgroundColor: '#EBD00c',
-          position: 'absolute',
-          top: 47,
-          left: 175,
-        }}>
-          <Text style={{ left: 10, fontWeight: "bold" }}>
-            YES
-          </Text>
-        </View>
-        
-        
-       
-        <Pie
-          radius={80}
-          innerRadius={60}
-          sections={[
-            {
-              id: 3,
-              percentage: 30,
-              color: '#C70000',
-            },
-            {
-              id: 4,
-              percentage: 70,
-              color: '#EBD00c',
-            },
-          ]}
-          dividerSize={0}
-          strokeCap={'butt'}
+        <FlatList
+          data={Data}
+          renderItem={({item}) => {
+            return (
+              <View
+                style={{
+                  borderColor: 'black',
+                  paddingVertical: 10,
+                  paddingHorizontal: 10,
+                  elevation: 10,
+                  borderTopLeftRadius: 15,
+                  borderTopRightRadius: 15,
+                  borderBottomLeftRadius: 15,
+                  borderBottomRightRadius: 15,
+                  flexDirection: 'row',
+                  margin: 7,
+                  backgroundColor: 'lightgrey',
+                }}
+                key={item.key}>
+                <TouchableOpacity
+                  onPress={() => {
+                    NextScreen(item);
+                  }}>
+                  <View style={styles.infoContainer}>
+                    <View style={{flexDirection: 'row'}}>
+                      <Text
+                        style={{
+                          color: 'black',
+                          fontSize: 18,
+                          fontWeight: 'bold',
+                        }}>
+                        Title :{' '}
+                      </Text>
+                      <Text style={{color: 'black', fontSize: 17, left: 2}}>
+                        {' '}
+                        {item.title}
+                      </Text>
+                    </View>
+                    <View style={{flexDirection: 'row'}}>
+                      <Text
+                        style={{
+                          color: 'black',
+                          fontSize: 17,
+                          fontWeight: 'bold',
+                          left: 1.5,
+                        }}>
+                        Start Date :{' '}
+                      </Text>
+                      <Text style={{color: 'black', fontSize: 17, left: 4}}>
+                        {' '}
+                        {item.start_date}
+                      </Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              </View>
+            );
+          }}
         />
-        <Text style={{ color: "black" ,left:10}}>
-          Result
-        </Text>
-      </View>
-
-
-      {/* 2nd pie */}
-
-
-      <View style={{top:80}}>
-        <Text style={{fontSize:24,textAlign:"left",color:"black",left:10}}>
-            Question # 2:-
-        </Text>
-        <Text style={{fontSize:16,textAlign:"left",color:"black",left:14}}>
-        Is React Native worth it in 2022
-        </Text>
-    </View>
-    <View style={{ flexDirection: "row",top:100,left:30 }}>
-        <View style={{
-          height: 20,
-          width: 100,
-          backgroundColor: '#C70000',
-          position: 'absolute',
-          top: 24,
-          left: 175,
-        }}>
-          <Text style={{ left: 10, fontWeight: "bold" }}>
-            NO
-          </Text>
+        <View
+          style={{
+            backgroundColor: 'lightblue',
+            borderRadius: 200,
+            width: 60,
+            left: 300,
+            top: '120%',
+          }}>
+          <Icon
+            name="add"
+            size={60}
+            color="black"
+            style={{position: 'relative'}}
+            onPress={() => navigation.navigate('CreateSurvey')}
+          />
         </View>
-
-        
-        <View style={{
-          height: 20,
-          width: 100,
-          backgroundColor: '#EBD00c',
-          position: 'absolute',
-          top: 47,
-          left: 175,
-        }}>
-          <Text style={{ left: 10, fontWeight: "bold" }}>
-            YES
-          </Text>
-        </View>
-        <Pie
-          radius={80}
-          innerRadius={60}
-          sections={[
-            {
-              id: 1,
-              percentage: 70,
-              color: '#C70000',
-            },
-            {
-              id: 2,
-              percentage: 30,
-              color: '#EBD00c',
-            },
-          ]}
-          dividerSize={0}
-          strokeCap={'butt'}
-        />
-        <Text style={{ color: "black" ,left:10}}>
-          Result
-        </Text>
       </View>
+    </SafeAreaView>
+  );
+}
 
+const styles = StyleSheet.create({
+  FlatlistContainer: {
+    //backgroundColor: '#F0ECD5',
+    flexDirection: 'row',
+    margin: 7,
+    //flex:1,
+    borderRadius: 10,
+    backgroundColor: 'lightgrey',
+    //flexGrow:0
+  },
 
-{/* // 3rd pie */}
+  Text: {
+    fontSize: 15,
+    color: 'grey',
+  },
 
+  QRCode: {
+    marginLeft: 20,
+  },
 
-<View style={{top:110}}>
-        <Text style={{fontSize:24,textAlign:"left",color:"black",left:10}}>
-            Question # 3:-
-        </Text>
-        <Text style={{fontSize:16,textAlign:"left",color:"black",left:14}}>
-        Is React Native worth it in 2022
-        </Text>
-    </View>
-    <View style={{ flexDirection: "row",top:130,left:30 }}>
-        <View style={{
-          height: 20,
-          width: 100,
-          backgroundColor: '#C70000',
-          position: 'absolute',
-          top: 24,
-          left: 175,
-        }}>
-          <Text style={{ left: 10, fontWeight: "bold" }}>
-            NO
-          </Text>
-        </View>      
-        <View style={{
-          height: 20,
-          width: 100,
-          backgroundColor: '#EBD00c',
-          position: 'absolute',
-          top: 47,
-          left: 175,
-        }}>
-          <Text style={{ left: 10, fontWeight: "bold" }}>
-            YES
-          </Text>
-        </View>
+  imageContainer: {
+    height: 70,
+    width: 77,
+    marginLeft: 10,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    //backgroundColor:'red',
+  },
 
-        <Pie
-          radius={80}
-          innerRadius={60}
-          sections={[
-            {
-              id: 5,
-              percentage: 60,
-              color: '#C70000',
-            },
-            {
-              id: 6,
-              percentage: 40,
-              color: '#EBD00c',
-            },
-          ]}
-          dividerSize={0}
-          strokeCap={'butt'}
-        />
-        <Text style={{ color: "black" ,left:10}}>
-          Result
-        </Text>
-      </View>
-      
-
-{/* // 3rd pie */}
-
-
-<View style={{top:140}}>
-        <Text style={{fontSize:24,textAlign:"left",color:"black",left:10}}>
-            Question # 4:-
-        </Text>
-        <Text style={{fontSize:16,textAlign:"left",color:"black",left:14}}>
-        Is React Native worth it in 2022
-        </Text>
-    </View>
-    <View style={{ flexDirection: "row",top:150,left:30 }}>
-        <View style={{
-          height: 20,
-          width: 100,
-          backgroundColor: '#C70000',
-          position: 'absolute',
-          top: 24,
-          left: 175,
-        }}>
-          <Text style={{ left: 10, fontWeight: "bold" }}>
-            NO
-          </Text>
-        </View>      
-        <View style={{
-          height: 20,
-          width: 100,
-          backgroundColor: '#EBD00c',
-          position: 'absolute',
-          top: 47,
-          left: 175,
-        }}>
-          <Text style={{ left: 10, fontWeight: "bold" }}>
-            YES
-          </Text>
-        </View>
-
-        <Pie
-          radius={80}
-          innerRadius={60}
-          sections={[
-            {
-              id: 8,
-              percentage: 90,
-              color: '#C70000',
-            },
-            {
-              id: 9,
-              percentage: 10,
-              color: '#EBD00c',
-            },
-          ]}
-          dividerSize={0}
-          strokeCap={'butt'}/>
-        <Text style={{ color: "black" ,left:10}}>
-          Result
-        </Text>
-      </View>
-      </ScrollView>
-  )}
-
-
-export default Result
+  infoContainer: {
+    marginLeft: 20,
+    // flexDirection:"row",
+    // width:200,
+    // alignItems: 'flex-start',
+    // justifyContent: "space-evenly",
+    // width: 180,
+    // //backgroundColor:'#F0ECD5',
+  },
+});
